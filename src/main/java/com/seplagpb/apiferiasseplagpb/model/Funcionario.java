@@ -14,6 +14,7 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private Integer diasFeriasGozados = 0; // Inicializado com 0
+    private Integer registrarPeriodoFerias;
 
 
     // Construtores, getters e setters
@@ -51,6 +52,8 @@ public class Funcionario {
     public void setDiasFeriasGozados(Integer diasFeriasGozados) {
         this.diasFeriasGozados = diasFeriasGozados;
     }
+
+
 
     public void adicionarDiasFeriasGozados(int dias) {
         this.diasFeriasGozados += dias; // Soma os novos dias aos já existentes

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/funcionarios")
+@RequestMapping("/api/funcionarios")
 public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;
@@ -36,7 +36,6 @@ public class FuncionarioController {
     }
 
 
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
         try {
@@ -54,19 +53,17 @@ public class FuncionarioController {
     }
 
 
-
-    @PostMapping("/{id}/registrar-ferias")
+    @PostMapping("/{id}/registroFerias")
     public ResponseEntity<?> registrarPeriodoFerias(@PathVariable Long id, @RequestBody RegistrarFeriasRequest request) {
         try {
             Funcionario funcionario = funcionarioService.registrarPeriodoFerias(id, request.getInicioFerias(), request.getDias());
             return ResponseEntity.ok(funcionario);
-        } catch (Exception e) {
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+
         }
-
-
     }
 
-
 }
-
