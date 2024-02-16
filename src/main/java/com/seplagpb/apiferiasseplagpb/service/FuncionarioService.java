@@ -40,16 +40,8 @@ public class FuncionarioService {
 
         int diasDeFeriasEmAberto = calcularFeriasEmAberto(funcionario);
 
-        if (diasGozados <= 0) {
-            throw new IllegalArgumentException("Número de dias de férias deve ser positivo.");
-        }
-
-        if (funcionario.getDiasFeriasGozados() + diasGozados > 30) {
-            throw new IllegalArgumentException("A soma dos dias de férias gozados excede o limite permitido de 30 dias no período aquisitivo.");
-        }
-
-        if (diasGozados > diasDeFeriasEmAberto) {
-            throw new IllegalArgumentException("Número de dias de férias solicitado é superior ao saldo de dias em aberto.");
+        if (diasGozados <= 0 || diasGozados > diasDeFeriasEmAberto) {
+            throw new IllegalArgumentException("Número de dias de férias inválido ou superior ao saldo de dias em aberto.");
         }
 
         funcionario.adicionarDiasFeriasGozados(diasGozados);
@@ -83,6 +75,11 @@ public class FuncionarioService {
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com ID: " + funcionarioId));
 
         int diasDeFeriasEmAberto = calcularFeriasEmAberto(funcionario);
+
+        LocalDate dataMinimaParaFerias = funcionario.getDataAdmissao().plusMonths(12);
+        if (inicioFerias.isBefore(dataMinimaParaFerias)) {
+            throw new IllegalArgumentException("A data de início das férias é anterior ao período aquisitivo de 12 meses.");
+        }
 
         if (dias > diasDeFeriasEmAberto) {
             throw new IllegalArgumentException("Não há dias de férias suficientes para o período solicitado.");
