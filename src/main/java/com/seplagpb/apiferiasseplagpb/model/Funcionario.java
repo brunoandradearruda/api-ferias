@@ -1,9 +1,11 @@
 package com.seplagpb.apiferiasseplagpb.model;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
+
 
 @Entity
 public class Funcionario {
@@ -14,10 +16,11 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private Integer diasFeriasGozados = 0; // Inicializado com 0
-    private Integer registrarPeriodoFerias;
+    private String periodoAquisitivo; // Armazena o período aquisitivo das férias, ex: "2023-2024"
+    private LocalDate inicioFerias;
+    private LocalDate fimFerias;
 
-
-    // Construtores, getters e setters
+    // Construtores
     public Funcionario() {}
 
     // Getters e setters
@@ -53,10 +56,34 @@ public class Funcionario {
         this.diasFeriasGozados = diasFeriasGozados;
     }
 
+    public String getPeriodoAquisitivo() {
+        return periodoAquisitivo;
+    }
 
+    public void setPeriodoAquisitivo(String periodoAquisitivo) {
+        this.periodoAquisitivo = periodoAquisitivo;
+    }
+
+    public LocalDate getInicioFerias() {
+        return inicioFerias;
+    }
+
+    public void setInicioFerias(LocalDate inicioFerias) {
+        this.inicioFerias = inicioFerias;
+    }
+
+    public LocalDate getFimFerias() {
+        return fimFerias;
+    }
+
+    public void setFimFerias(LocalDate fimFerias) {
+        this.fimFerias = fimFerias;
+    }
 
     public void adicionarDiasFeriasGozados(int dias) {
         this.diasFeriasGozados += dias; // Soma os novos dias aos já existentes
     }
+
+
 
 }

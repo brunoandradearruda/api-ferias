@@ -2,6 +2,7 @@ package com.seplagpb.apiferiasseplagpb.controller;
 
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
+import com.seplagpb.apiferiasseplagpb.dto.RegistroFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
@@ -66,4 +67,22 @@ public class FuncionarioController {
         }
     }
 
+    @GetMapping("/em-ferias")
+    public List<Funcionario> funcionariosEmFerias() {
+        return funcionarioService.funcionariosEmFerias();
+    }
+
+    @PostMapping("/funcionarios/{id}/registroFerias")
+    public ResponseEntity<Funcionario> registrarFerias(@PathVariable Long id, @RequestBody RegistroFeriasDTO registroFeriasDTO) {
+        try {
+            Funcionario funcionarioAtualizado = funcionarioService.registrarPeriodoFerias(id, registroFeriasDTO.getInicioFerias(), registroFeriasDTO.getDias());
+            return ResponseEntity.ok(funcionarioAtualizado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 }
+
