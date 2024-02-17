@@ -1,5 +1,6 @@
 package com.seplagpb.apiferiasseplagpb.service;
 
+import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasAtrasadasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.repository.FuncionarioRepository;
@@ -98,5 +99,20 @@ public class FuncionarioService {
         funcionario.setFimFerias(fimFerias);
 
         return funcionarioRepository.save(funcionario);
+    }
+
+    public List<FuncionarioFeriasAtrasadasDTO> listarFuncionariosComFeriasAtrasadas() {
+        return funcionarioRepository.findAll().stream()
+                .filter(funcionario -> {
+                    LocalDate dataReferencia = funcionario.getDataUltimasFerias() != null ? funcionario.getDataUltimasFerias() : funcionario.getDataAdmissao();
+                    long diasAtrasados = ChronoUnit.DAYS.between(dataReferencia.plusYears(1), LocalDate.now());
+                    return diasAtrasados > 0;
+                })
+                .map(funcionario -> {
+                    LocalDate dataReferencia = funcionario.getDataUltimasFerias() != null ? funcionario.getDataUltimasFerias() : funcionario.getDataAdmissao();
+                    long diasAtrasados = ChronoUnit.DAYS.between(dataReferencia.plusYears(1), LocalDate.now());
+                    return new FuncionarioFeriasAtrasadasDTO(funcionario.getId(), funcionario.getNome(), (int) diasAtrasados);
+                })
+                .collect(Collectors.toList());
     }
 }

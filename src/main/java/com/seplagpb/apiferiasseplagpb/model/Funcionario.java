@@ -18,11 +18,14 @@ public class Funcionario {
     private LocalDate inicioFerias;
     private LocalDate fimFerias;
     private Integer diasFeriasRestantes = 30; // Inicializado com o total de dias de férias por ano
-
+    private LocalDate dataUltimasFerias;
 
     public Funcionario() {}
 
 
+    public LocalDate getDataUltimasFerias() {
+        return this.dataUltimasFerias;
+    }
 
     public Long getId() {
         return id;
