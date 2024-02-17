@@ -6,7 +6,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.time.LocalDate;
 
-
 @Entity
 public class Funcionario {
 
@@ -16,7 +15,7 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private Integer diasFeriasGozados = 0; // Inicializado com 0
-    private String periodoAquisitivo; // Armazena o período aquisitivo das férias, ex: "2023-2024"
+    private String periodoAquisitivo; // Exemplo: "2023-2024"
     private LocalDate inicioFerias;
     private LocalDate fimFerias;
 
@@ -80,10 +79,8 @@ public class Funcionario {
         this.fimFerias = fimFerias;
     }
 
+    // Adiciona dias de férias gozados e atualiza o período aquisitivo
     public void adicionarDiasFeriasGozados(int dias) {
         this.diasFeriasGozados += dias; // Soma os novos dias aos já existentes
     }
-
-
-
 }
