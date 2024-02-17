@@ -87,12 +87,14 @@ public class FuncionarioService {
             throw new IllegalArgumentException("Funcionário não tem tempo de serviço suficiente para gozar férias.");
         }
 
-        // Atualiza os dias de férias gozados
-        funcionario.adicionarDiasFeriasGozados(dias);
+        int diasFeriasRestantes = 30 - funcionario.getDiasFeriasGozados();
+        if (dias > diasFeriasRestantes) {
+            throw new IllegalArgumentException("Funcionário não tem dias de férias suficientes para o período solicitado.");
+        }
 
-        // Calcula e define a data de fim das férias
-        LocalDate fimFerias = inicioFerias.plusDays(dias - 1);
+        funcionario.setDiasFeriasGozados(funcionario.getDiasFeriasGozados() + dias);
         funcionario.setInicioFerias(inicioFerias);
+        LocalDate fimFerias = inicioFerias.plusDays(dias - 1);
         funcionario.setFimFerias(fimFerias);
 
         return funcionarioRepository.save(funcionario);

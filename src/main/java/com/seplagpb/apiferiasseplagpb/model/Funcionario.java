@@ -15,14 +15,15 @@ public class Funcionario {
     private String nome;
     private LocalDate dataAdmissao;
     private Integer diasFeriasGozados = 0; // Inicializado com 0
-    private String periodoAquisitivo; // Exemplo: "2023-2024"
     private LocalDate inicioFerias;
     private LocalDate fimFerias;
+    private Integer diasFeriasRestantes = 30; // Inicializado com o total de dias de férias por ano
 
-    // Construtores
+
     public Funcionario() {}
 
-    // Getters e setters
+
+
     public Long getId() {
         return id;
     }
@@ -53,15 +54,10 @@ public class Funcionario {
 
     public void setDiasFeriasGozados(Integer diasFeriasGozados) {
         this.diasFeriasGozados = diasFeriasGozados;
+        // Atualiza os dias de férias restantes com base nos dias de férias gozados
+        this.diasFeriasRestantes = 30 - diasFeriasGozados;
     }
 
-    public String getPeriodoAquisitivo() {
-        return periodoAquisitivo;
-    }
-
-    public void setPeriodoAquisitivo(String periodoAquisitivo) {
-        this.periodoAquisitivo = periodoAquisitivo;
-    }
 
     public LocalDate getInicioFerias() {
         return inicioFerias;
@@ -79,8 +75,25 @@ public class Funcionario {
         this.fimFerias = fimFerias;
     }
 
-    // Adiciona dias de férias gozados e atualiza o período aquisitivo
     public void adicionarDiasFeriasGozados(int dias) {
-        this.diasFeriasGozados += dias; // Soma os novos dias aos já existentes
+        if (dias < 0) {
+            throw new IllegalArgumentException("Não é possível adicionar uma quantidade negativa de dias de férias.");
+        }
+
+        int novosDiasFeriasGozados = this.diasFeriasGozados + dias;
+        if (novosDiasFeriasGozados > 30) {
+            throw new IllegalArgumentException("A quantidade total de dias de férias gozados excede o limite permitido de 30 dias.");
+        }
+
+        this.diasFeriasGozados = novosDiasFeriasGozados;
     }
+
+    public Integer getDiasFeriasRestantes() {
+        return diasFeriasRestantes;
+    }
+
+    public void setDiasFeriasRestantes(Integer diasFeriasRestantes) {
+        this.diasFeriasRestantes = diasFeriasRestantes;
+    }
+
 }
