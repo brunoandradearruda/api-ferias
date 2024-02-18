@@ -1,4 +1,5 @@
 package com.seplagpb.apiferiasseplagpb.controller;
+import com.seplagpb.apiferiasseplagpb.dto.FuncionarioDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
 import com.seplagpb.apiferiasseplagpb.dto.RegistroFeriasDTO;
@@ -6,6 +7,7 @@ import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,5 +85,16 @@ public class FuncionarioController {
 //        }
 //    }
 
+    @PostMapping("/cadastro")
+    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(funcionarioDTO.getNome());
+        funcionario.setDataAdmissao(funcionarioDTO.getDataAdmissao());
+        // Configure aqui outros campos conforme necessário
+
+        Funcionario funcionarioSalvo = funcionarioService.salvarFuncionario(funcionario);
+        return new ResponseEntity<>(funcionarioSalvo, HttpStatus.CREATED);
+    }
 }
+
 

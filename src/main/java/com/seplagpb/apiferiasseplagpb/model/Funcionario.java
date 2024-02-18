@@ -35,6 +35,10 @@ public class Funcionario {
         this.id = id;
     }
 
+    public void setDataUltimasFerias(LocalDate dataUltimasFerias) {
+        this.dataUltimasFerias = dataUltimasFerias;
+    }
+
     public String getNome() {
         return nome;
     }

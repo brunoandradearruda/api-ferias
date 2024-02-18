@@ -83,20 +83,29 @@ public class FuncionarioService {
         Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com ID: " + funcionarioId));
 
+        // Verifica se já existem férias registradas para o período solicitado
+        if (funcionario.getInicioFerias() != null && !inicioFerias.isAfter(funcionario.getFimFerias())) {
+            throw new IllegalArgumentException("Já existem férias registradas para o período solicitado.");
+        }
+
+        // Verificação de tempo de serviço suficiente para gozar férias
         LocalDate dataMinimaParaFerias = funcionario.getDataAdmissao().plusMonths(12);
         if (inicioFerias.isBefore(dataMinimaParaFerias)) {
             throw new IllegalArgumentException("Funcionário não tem tempo de serviço suficiente para gozar férias.");
         }
 
+        // Calcula os dias de férias restantes e verifica se o funcionário tem dias suficientes
         int diasFeriasRestantes = 30 - funcionario.getDiasFeriasGozados();
         if (dias > diasFeriasRestantes) {
             throw new IllegalArgumentException("Funcionário não tem dias de férias suficientes para o período solicitado.");
         }
 
+        // Atualiza os dias de férias gozados e as datas de início e fim das férias
         funcionario.setDiasFeriasGozados(funcionario.getDiasFeriasGozados() + dias);
         funcionario.setInicioFerias(inicioFerias);
         LocalDate fimFerias = inicioFerias.plusDays(dias - 1);
         funcionario.setFimFerias(fimFerias);
+        funcionario.setDataUltimasFerias(fimFerias); // Atualiza a data das últimas férias gozadas
 
         return funcionarioRepository.save(funcionario);
     }
@@ -115,4 +124,6 @@ public class FuncionarioService {
                 })
                 .collect(Collectors.toList());
     }
+
+
 }
