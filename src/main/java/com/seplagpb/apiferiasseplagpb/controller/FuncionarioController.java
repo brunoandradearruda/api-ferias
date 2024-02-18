@@ -1,5 +1,4 @@
 package com.seplagpb.apiferiasseplagpb.controller;
-
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
 import com.seplagpb.apiferiasseplagpb.dto.RegistroFeriasDTO;
@@ -72,17 +71,17 @@ public class FuncionarioController {
         return funcionarioService.funcionariosEmFerias();
     }
 
-    @PostMapping("/funcionarios/{id}/registroFerias")
-    public ResponseEntity<Funcionario> registrarFerias(@PathVariable Long id, @RequestBody RegistroFeriasDTO registroFeriasDTO) {
-        try {
-            Funcionario funcionarioAtualizado = funcionarioService.registrarPeriodoFerias(id, registroFeriasDTO.getInicioFerias(), registroFeriasDTO.getDias());
-            return ResponseEntity.ok(funcionarioAtualizado);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest().body(null);
-        }
-    }
+//    @PostMapping("/funcionarios/{id}/registroFerias")
+//    public ResponseEntity<Funcionario> registrarFerias(@PathVariable Long id, @RequestBody RegistroFeriasDTO registroFeriasDTO) {
+//        try {
+//            Funcionario funcionarioAtualizado = funcionarioService.registrarPeriodoFerias(id, registroFeriasDTO.getInicioFerias(), registroFeriasDTO.getDias());
+//            return ResponseEntity.ok(funcionarioAtualizado);
+//        } catch (EntityNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        } catch (IllegalArgumentException e) {
+//            return ResponseEntity.badRequest().body(null);
+//        }
+//    }
 
 }
 
