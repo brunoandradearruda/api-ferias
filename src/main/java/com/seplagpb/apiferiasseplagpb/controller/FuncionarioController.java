@@ -2,7 +2,6 @@ package com.seplagpb.apiferiasseplagpb.controller;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
-import com.seplagpb.apiferiasseplagpb.dto.RegistroFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
@@ -102,6 +101,11 @@ public class FuncionarioController {
         List<Funcionario> funcionariosComFeriasPendentes = funcionarioService.listarComFeriasPendentes();
         model.addAttribute("funcionarios", funcionariosComFeriasPendentes);
         return "funcionarios-ferias-pendentes";
+    }
+
+    @GetMapping("/listar-funcionarios")
+    public List<Funcionario> listarFuncionarios() {
+        return funcionarioService.listarFuncionariosCadastrados();
     }
 
 }

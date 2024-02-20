@@ -143,5 +143,12 @@ public class FuncionarioService {
         funcionarioRepository.deleteById(id);
     }
 
+    // Em FuncionarioService
+
+    public List<Funcionario> listarFuncionariosCadastrados() {
+        return funcionarioRepository.findAll();
+    }
+
+
 
 }
