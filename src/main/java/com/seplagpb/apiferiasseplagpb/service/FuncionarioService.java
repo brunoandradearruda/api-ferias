@@ -125,5 +125,23 @@ public class FuncionarioService {
                 .collect(Collectors.toList());
     }
 
+    // Adicione sua lógica para determinar funcionários com férias pendentes
+    public List<Funcionario> listarComFeriasPendentes() {
+        // Exemplo de lógica para filtrar funcionários com férias pendentes
+        // Esta implementação é hipotética e deve ser ajustada conforme sua regra de negócio
+        return funcionarioRepository.findAll().stream()
+                .filter(funcionario -> funcionario.getDiasFeriasRestantes() > 0)
+                .collect(Collectors.toList());
+    }
+
+    public Funcionario salvar(Funcionario funcionario) {
+        // Implemente a lógica de salvar considerando as regras de negócio, como atualizar dias de férias pendentes
+        return funcionarioRepository.save(funcionario);
+    }
+
+    public void excluir(Long id) {
+        funcionarioRepository.deleteById(id);
+    }
+
 
 }

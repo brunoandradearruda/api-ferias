@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Cabeçalho omitido por brevidade -->
+</head>
+<body>
+<div class="container">
+    <h2>Funcionários com Férias Pendentes</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data de Admissão</th>
+            <th>Dias de Férias Pendentes</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="funcionario : ${funcionarios}">
+            <td th:text="${funcionario.nome}"></td>
+            <td th:text="${funcionario.dataAdmissao}"></td>
+            <td th:text="${funcionario.diasFeriasPendentes}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
