@@ -24,6 +24,10 @@ public class FuncionarioService {
     }
 
     public Funcionario salvarFuncionario(Funcionario funcionario) {
+        // Deixe o campo de dias de férias restantes como null
+        funcionario.setDiasFeriasRestantes(null);
+
+        // Restante do código...
         return funcionarioRepository.save(funcionario);
     }
 
