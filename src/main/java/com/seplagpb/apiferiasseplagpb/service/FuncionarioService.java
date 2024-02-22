@@ -92,16 +92,24 @@ public class FuncionarioService {
             throw new IllegalArgumentException("Já existem férias registradas para o período solicitado.");
         }
 
+        // Verifica se a data de início das férias é posterior à data de admissão do funcionário
+        if (inicioFerias.isBefore(funcionario.getDataAdmissao())) {
+            throw new IllegalArgumentException("A data de início das férias não pode ser anterior à data de admissão do funcionário.");
+        }
+        // Verifica se a data de início das férias é posterior à última data de férias gozadas
+        if (funcionario.getDataUltimasFerias() != null && inicioFerias.isBefore(funcionario.getDataUltimasFerias())) {
+            throw new IllegalArgumentException("A data de início das férias não pode ser anterior à última data de férias gozadas.");
+        }
+
         // Verificação de tempo de serviço suficiente para gozar férias
         LocalDate dataMinimaParaFerias = funcionario.getDataAdmissao().plusMonths(12);
         if (inicioFerias.isBefore(dataMinimaParaFerias)) {
             throw new IllegalArgumentException("Funcionário não tem tempo de serviço suficiente para gozar férias.");
         }
 
-        // Calcula os dias de férias restantes e verifica se o funcionário tem dias suficientes
-        int diasFeriasRestantes = 30 - funcionario.getDiasFeriasGozados();
-        if (dias > diasFeriasRestantes) {
-            throw new IllegalArgumentException("Funcionário não tem dias de férias suficientes para o período solicitado.");
+        // Verifica se o funcionário pode registrar férias para o período solicitado
+        if (!podeRegistrarFerias(funcionario, inicioFerias, dias)) {
+            throw new IllegalArgumentException("Não é possível registrar férias para o período solicitado.");
         }
 
         // Atualiza os dias de férias gozados e as datas de início e fim das férias
@@ -112,6 +120,39 @@ public class FuncionarioService {
         funcionario.setDataUltimasFerias(fimFerias); // Atualiza a data das últimas férias gozadas
 
         return funcionarioRepository.save(funcionario);
+    }
+
+    // Método para verificar se o funcionário pode registrar férias para o período solicitado
+    private boolean podeRegistrarFerias(Funcionario funcionario, LocalDate inicioFerias, int dias) {
+        LocalDate hoje = LocalDate.now();
+
+        // Verifica se a data de início das férias é posterior à última data de férias gozadas
+        if (funcionario.getDataUltimasFerias() != null && inicioFerias.isBefore(funcionario.getDataUltimasFerias())) {
+            throw new IllegalArgumentException("A data de início das férias não pode ser anterior à última data de férias gozadas.");
+        }
+
+        // Calcula os dias de férias restantes considerando as regras
+        int diasFeriasRestantes = calcularDiasFeriasRestantes(funcionario, hoje);
+
+        // Permite o registro de férias se houver dias suficientes
+        return dias > 0 && dias <= diasFeriasRestantes;
+    }
+
+    // Método ajustado para calcular os dias de férias restantes considerando as regras
+    private int calcularDiasFeriasRestantes(Funcionario funcionario, LocalDate hoje) {
+        int diasFeriasRestantes = 30 - funcionario.getDiasFeriasGozados();
+
+        // Verifica se já se passaram 12 meses desde a última data de férias gozadas
+        if (funcionario.getDataUltimasFerias() != null) {
+            long mesesDesdeUltimasFerias = ChronoUnit.MONTHS.between(funcionario.getDataUltimasFerias(), hoje);
+            if (mesesDesdeUltimasFerias >= 12) {
+                // Restaura os dias de férias gozados para permitir novos 30 dias
+                funcionario.setDiasFeriasGozados(0);
+                return 30;
+            }
+        }
+
+        return diasFeriasRestantes;
     }
 
     public List<FuncionarioFeriasAtrasadasDTO> listarFuncionariosComFeriasAtrasadas() {
@@ -152,7 +193,4 @@ public class FuncionarioService {
     public List<Funcionario> listarFuncionariosCadastrados() {
         return funcionarioRepository.findAll();
     }
-
-
-
 }
