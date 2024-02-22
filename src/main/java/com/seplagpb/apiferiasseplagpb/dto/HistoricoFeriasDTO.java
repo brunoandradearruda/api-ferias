@@ -11,6 +11,7 @@ public class HistoricoFeriasDTO {
     private LocalDate dataTermino;
     private int diasGozados;
     private int ano;
+    
 
     public HistoricoFeriasDTO(Long funcionarioId, String funcionarioNome, LocalDate dataInicio, LocalDate dataTermino, int diasGozados, int ano) {
         this.funcionarioId = funcionarioId;
