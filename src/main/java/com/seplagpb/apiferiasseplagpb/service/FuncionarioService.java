@@ -193,4 +193,5 @@ public class FuncionarioService {
     public List<Funcionario> listarFuncionariosCadastrados() {
         return funcionarioRepository.findAll();
     }
+
 }
