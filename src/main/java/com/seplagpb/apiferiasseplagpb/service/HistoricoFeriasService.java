@@ -28,6 +28,10 @@ public class HistoricoFeriasService {
                         funcionario.getInicioFerias(),
                         funcionario.getFimFerias(),
                         funcionario.getDiasFeriasGozados(),
+                        funcionario.getCargo(),
+                        funcionario.getSetor(),
+                        funcionario.getFuncao(),
+                        funcionario.getUnidadeTrabalho(),
                         funcionario.getInicioFerias().getYear()
                 ))
                 .collect(Collectors.toList());

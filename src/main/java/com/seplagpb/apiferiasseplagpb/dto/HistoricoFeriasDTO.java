@@ -11,15 +11,40 @@ public class HistoricoFeriasDTO {
     private LocalDate dataTermino;
     private int diasGozados;
     private int ano;
+    private String cargo;
+    private String setor;
+    private String unidadeTrabalho;
+    private String funcao;
     
 
-    public HistoricoFeriasDTO(Long funcionarioId, String funcionarioNome, LocalDate dataInicio, LocalDate dataTermino, int diasGozados, int ano) {
+    public HistoricoFeriasDTO(Long funcionarioId, String funcionarioNome, LocalDate dataInicio, LocalDate dataTermino, int diasGozados, String cargo, String funcao, String setor, String unidadeTrabalho, int ano) {
         this.funcionarioId = funcionarioId;
         this.funcionarioNome = funcionarioNome;
         this.dataInicio = dataInicio;
         this.dataTermino = dataTermino;
         this.diasGozados = diasGozados;
         this.ano = ano;
+        this.cargo = cargo;
+        this.setor = setor;
+        this.unidadeTrabalho = unidadeTrabalho;
+        this.funcao = funcao;
+    }
+
+    public String getUnidadeTrabalho() {
+        return unidadeTrabalho;
+    }
+
+    public void setUnidadeTrabalho(String unidadeTrabalho) {
+        this.unidadeTrabalho = unidadeTrabalho;
+    }
+
+
+    public String getSetor() {
+        return setor;
+    }
+
+    public void setSetor(String setor) {
+        this.setor = setor;
     }
 
     public Long getFuncionarioId() {
@@ -69,4 +94,22 @@ public class HistoricoFeriasDTO {
     public void setAno(int ano) {
         this.ano = ano;
     }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
+    }
+
+
 }

@@ -195,6 +195,8 @@ public class Funcionario {
         return cargo;
     }
 
+
+
     public void setCargo(String cargo) {
         this.cargo = cargo;
     }
