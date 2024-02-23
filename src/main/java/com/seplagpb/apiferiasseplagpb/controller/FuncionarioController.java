@@ -1,16 +1,13 @@
 package com.seplagpb.apiferiasseplagpb.controller;
-import com.seplagpb.apiferiasseplagpb.dto.FuncionarioDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 
@@ -73,37 +70,6 @@ public class FuncionarioController {
         return funcionarioService.funcionariosEmFerias();
     }
 
-//    @PostMapping("/funcionarios/{id}/registroFerias")
-//    public ResponseEntity<Funcionario> registrarFerias(@PathVariable Long id, @RequestBody RegistroFeriasDTO registroFeriasDTO) {
-//        try {
-//            Funcionario funcionarioAtualizado = funcionarioService.registrarPeriodoFerias(id, registroFeriasDTO.getInicioFerias(), registroFeriasDTO.getDias());
-//            return ResponseEntity.ok(funcionarioAtualizado);
-//        } catch (EntityNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        } catch (IllegalArgumentException e) {
-//            return ResponseEntity.badRequest().body(null);
-//        }
-//    }
-
-
-    //Controllador de cadastro omitido
-//    @PostMapping("/cadastro")
-//    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
-//        Funcionario funcionario = new Funcionario();
-//        funcionario.setNome(funcionarioDTO.getNome());
-//        funcionario.setDataAdmissao(funcionarioDTO.getDataAdmissao());
-//        // Configure aqui outros campos conforme necessário
-//
-//        Funcionario funcionarioSalvo = funcionarioService.salvarFuncionario(funcionario);
-//        return new ResponseEntity<>(funcionarioSalvo, HttpStatus.CREATED);
-//    }
-
-//    @GetMapping("/funcionarios/ferias-pendentes")
-//    public String mostrarFuncionariosComFeriasPendentes(Model model) {
-//        List<Funcionario> funcionariosComFeriasPendentes = funcionarioService.listarComFeriasPendentes();
-//        model.addAttribute("funcionarios", funcionariosComFeriasPendentes);
-//        return "funcionarios-ferias-pendentes";
-//    }
 
     @GetMapping("/listar-funcionarios")
     public List<Funcionario> listarFuncionarios() {
@@ -111,5 +77,16 @@ public class FuncionarioController {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
