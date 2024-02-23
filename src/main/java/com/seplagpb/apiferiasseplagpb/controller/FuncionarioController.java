@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/funcionarios")
+@RequestMapping("/funcionarios")
 public class FuncionarioController {
 
     private final FuncionarioService funcionarioService;
@@ -25,7 +25,7 @@ public class FuncionarioController {
         this.funcionarioService = funcionarioService;
     }
 
-    @PostMapping
+    @PostMapping("/cadastro")
     public ResponseEntity<Funcionario> salvarFuncionario(@RequestBody Funcionario funcionario) {
         Funcionario funcionarioSalvo = funcionarioService.salvarFuncionario(funcionario);
         return ResponseEntity.ok(funcionarioSalvo);
@@ -85,23 +85,25 @@ public class FuncionarioController {
 //        }
 //    }
 
-    @PostMapping("/cadastro")
-    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNome(funcionarioDTO.getNome());
-        funcionario.setDataAdmissao(funcionarioDTO.getDataAdmissao());
-        // Configure aqui outros campos conforme necessário
 
-        Funcionario funcionarioSalvo = funcionarioService.salvarFuncionario(funcionario);
-        return new ResponseEntity<>(funcionarioSalvo, HttpStatus.CREATED);
-    }
+    //Controllador de cadastro omitido
+//    @PostMapping("/cadastro")
+//    public ResponseEntity<Funcionario> cadastrarFuncionario(@RequestBody FuncionarioDTO funcionarioDTO) {
+//        Funcionario funcionario = new Funcionario();
+//        funcionario.setNome(funcionarioDTO.getNome());
+//        funcionario.setDataAdmissao(funcionarioDTO.getDataAdmissao());
+//        // Configure aqui outros campos conforme necessário
+//
+//        Funcionario funcionarioSalvo = funcionarioService.salvarFuncionario(funcionario);
+//        return new ResponseEntity<>(funcionarioSalvo, HttpStatus.CREATED);
+//    }
 
-    @GetMapping("/funcionarios/ferias-pendentes")
-    public String mostrarFuncionariosComFeriasPendentes(Model model) {
-        List<Funcionario> funcionariosComFeriasPendentes = funcionarioService.listarComFeriasPendentes();
-        model.addAttribute("funcionarios", funcionariosComFeriasPendentes);
-        return "funcionarios-ferias-pendentes";
-    }
+//    @GetMapping("/funcionarios/ferias-pendentes")
+//    public String mostrarFuncionariosComFeriasPendentes(Model model) {
+//        List<Funcionario> funcionariosComFeriasPendentes = funcionarioService.listarComFeriasPendentes();
+//        model.addAttribute("funcionarios", funcionariosComFeriasPendentes);
+//        return "funcionarios-ferias-pendentes";
+//    }
 
     @GetMapping("/listar-funcionarios")
     public List<Funcionario> listarFuncionarios() {
