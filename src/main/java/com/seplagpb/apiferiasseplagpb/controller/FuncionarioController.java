@@ -71,6 +71,7 @@ public class FuncionarioController {
     @GetMapping("/em-ferias")
     public List<Funcionario> funcionariosEmFerias() {
         LocalDate dataAtual = LocalDate.now();
+//        LocalDate dataAtual = LocalDate.of(2024, 3, 23);
 
         return funcionarioService.listarFuncionariosCadastrados().stream()
                 .filter(funcionario -> funcionario.getInicioFerias() != null &&
@@ -86,6 +87,7 @@ public class FuncionarioController {
 
     @GetMapping("/listar-funcionarios")
     public List<Funcionario> listarFuncionarios() {
+
         return funcionarioService.listarFuncionariosCadastrados();
     }
 
