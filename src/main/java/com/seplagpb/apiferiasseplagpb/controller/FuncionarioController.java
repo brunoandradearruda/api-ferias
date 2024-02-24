@@ -32,6 +32,17 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionarioSalvo);
     }
 
+
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionarioAtualizado) {
+        try {
+            Funcionario funcionario = funcionarioService.atualizarFuncionario(id, funcionarioAtualizado);
+            return ResponseEntity.ok(funcionario);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @GetMapping("/{id}/direito-ferias")
     public ResponseEntity<?> verificarDireitoFerias(@PathVariable Long id) {
         boolean temDireito = funcionarioService.temDireitoAFerias(id);

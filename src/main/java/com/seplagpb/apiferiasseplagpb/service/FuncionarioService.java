@@ -211,6 +211,29 @@ public class FuncionarioService {
         return 0;
     }
 
+    public Funcionario atualizarFuncionario(Long id, Funcionario funcionarioAtualizado) {
+        return funcionarioRepository.findById(id)
+                .map(funcionarioExistente -> {
+                    // Atualize apenas os campos não nulos do funcionarioAtualizado
+                    if (funcionarioAtualizado.getNome() != null) {
+                        funcionarioExistente.setNome(funcionarioAtualizado.getNome());
+                    }
+
+                    if (funcionarioAtualizado.getCpf() != null) {
+                        funcionarioExistente.setCpf(funcionarioAtualizado.getCpf());
+                    }
+
+                    if (funcionarioAtualizado.getSexo() != null) {
+                        funcionarioExistente.setSexo(funcionarioAtualizado.getSexo());
+                    }
+
+                    // Adicione mais campos conforme necessário
+
+                    // Salve as alterações no banco de dados
+                    return funcionarioRepository.save(funcionarioExistente);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com o ID: " + id));
+    }
 }
 
 
