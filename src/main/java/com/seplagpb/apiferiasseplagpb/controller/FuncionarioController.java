@@ -50,15 +50,16 @@ public class FuncionarioController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/excluir/{id}")
     public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
-            return ResponseEntity.ok().build(); // Retorna uma resposta 200 OK sem corpo
+            return ResponseEntity.ok("Excluído com sucesso"); // Retorna uma resposta 200 OK com a mensagem
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
         }
     }
+
 
     @GetMapping("/ferias-pendentes")
     public ResponseEntity<List<FuncionarioFeriasDTO>> listarFuncionariosComFeriasPendentes() {
