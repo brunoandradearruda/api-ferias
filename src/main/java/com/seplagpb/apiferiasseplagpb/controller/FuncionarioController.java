@@ -22,6 +22,7 @@ public class FuncionarioController {
 
     @Autowired
     public FuncionarioController(FuncionarioService funcionarioService) {
+
         this.funcionarioService = funcionarioService;
     }
 
@@ -68,20 +69,25 @@ public class FuncionarioController {
         }
     }
 
+
     @GetMapping("/em-ferias")
     public List<Funcionario> funcionariosEmFerias() {
         LocalDate dataAtual = LocalDate.now();
-//        LocalDate dataAtual = LocalDate.of(2024, 3, 23);
 
         return funcionarioService.listarFuncionariosCadastrados().stream()
-                .filter(funcionario -> funcionario.getInicioFerias() != null &&
-                        funcionario.getFimFerias() != null &&
-                        (dataAtual.isEqual(funcionario.getInicioFerias()) ||
-                                dataAtual.isEqual(funcionario.getFimFerias()) ||
-                                (dataAtual.isAfter(funcionario.getInicioFerias()) &&
-                                        dataAtual.isBefore(funcionario.getFimFerias()))))
+                .filter(funcionario -> {
+                    long diasAdicionais = funcionarioService.calcularDiasAdicionaisFerias(funcionario);
+
+                    return funcionario.getInicioFerias() != null &&
+                            funcionario.getFimFerias() != null &&
+                            (dataAtual.isEqual(funcionario.getInicioFerias().plusDays(diasAdicionais)) ||
+                                    dataAtual.isEqual(funcionario.getFimFerias().plusDays(diasAdicionais)) ||
+                                    (dataAtual.isAfter(funcionario.getInicioFerias().plusDays(diasAdicionais)) &&
+                                            dataAtual.isBefore(funcionario.getFimFerias().plusDays(diasAdicionais))));
+                })
                 .collect(Collectors.toList());
     }
+
 
 
 

@@ -196,6 +196,22 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
+    public long calcularDiasAdicionaisFerias(Funcionario funcionario) {
+        LocalDate dataAtual = LocalDate.now();
+        LocalDate dataAdmissao = funcionario.getDataAdmissao();
+
+        // Calcular a diferença em meses
+        long mesesDeDiferenca = ChronoUnit.MONTHS.between(dataAdmissao, dataAtual);
+
+        // Adicionar 30 dias se a diferença for múltiplo de 12 meses
+        if (mesesDeDiferenca > 0 && mesesDeDiferenca % 12 == 0) {
+            return 30;
+        }
+
+        return 0;
+    }
+
 }
+
 
 
