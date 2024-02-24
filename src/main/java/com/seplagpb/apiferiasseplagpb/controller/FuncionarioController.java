@@ -8,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/funcionarios")
@@ -67,8 +70,18 @@ public class FuncionarioController {
 
     @GetMapping("/em-ferias")
     public List<Funcionario> funcionariosEmFerias() {
-        return funcionarioService.funcionariosEmFerias();
+        LocalDate dataAtual = LocalDate.now();
+
+        return funcionarioService.listarFuncionariosCadastrados().stream()
+                .filter(funcionario -> funcionario.getInicioFerias() != null &&
+                        funcionario.getFimFerias() != null &&
+                        (dataAtual.isEqual(funcionario.getInicioFerias()) ||
+                                dataAtual.isEqual(funcionario.getFimFerias()) ||
+                                (dataAtual.isAfter(funcionario.getInicioFerias()) &&
+                                        dataAtual.isBefore(funcionario.getFimFerias()))))
+                .collect(Collectors.toList());
     }
+
 
 
     @GetMapping("/listar-funcionarios")
