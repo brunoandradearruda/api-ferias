@@ -3,28 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro de Férias</title>
+    <!-- Incluir CSS do Bootstrap via CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body>
-<h2>Registro de Férias</h2>
-<form th:action="@{/registroFerias}" th:object="${registroFeriasRequest}" method="post">
-    <div>
-        <label for="funcionarioId">Funcionário:</label>
-        <select id="funcionarioId" name="funcionarioId" required>
-            <option value="">Selecione um Funcionário</option>
-            <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}">Nome do Funcionário</option>
-        </select>
+<body class="bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+                        <a class="dropdown-item" href="/cadastro">Cadastro</a>
+                        <a class="dropdown-item" href="/funcionarios/listar">Listar</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFerias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Férias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/registroFerias">Cadastrar</a>
+                        <a class="dropdown-item" href="/historicoFeriasModel">Histórico</a>
+                        <a class="dropdown-item" href="/funcionarios-em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
+                        <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div>
-        <label for="inicioFerias">Data de Início:</label>
-        <input type="date" id="inicioFerias" name="inicioFerias" th:field="*{inicioFerias}" required />
+</nav>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <h5 class="card-header">Registro de Férias</h5>
+                <div class="card-body">
+                    <form th:action="@{/registroFerias}" th:object="${registroFeriasRequest}" method="post">
+                        <div class="form-group">
+                            <label for="funcionarioId">Funcionário:</label>
+                            <select id="funcionarioId" name="funcionarioId" class="form-control" required>
+                                <option value="">Selecione um Funcionário</option>
+                                <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}"></option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inicioFerias">Data de Início:</label>
+                            <input type="date" id="inicioFerias" name="inicioFerias" th:field="*{inicioFerias}" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="dias">Duração (dias):</label>
+                            <input type="number" id="dias" name="dias" th:field="*{dias}" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Registrar Férias</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label for="dias">Duração (dias):</label>
-        <input type="number" id="dias" name="dias" th:field="*{dias}" required />
-    </div>
-    <div>
-        <button type="submit" class="btn btn-primary mt-4">Cadastrar</button>
-    </div>
-</form>
+</div>
+
+<!-- Opcional: Incluir JS do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
