@@ -2,27 +2,29 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar Férias</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Registro de Férias</title>
 </head>
 <body>
-<div class="container mt-5">
-    <h2>Registrar Férias do Funcionário</h2>
-    <form th:action="@{/funcionarios/{id}/registroFerias(id=${funcionarioId})}" th:method="post">
-        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-        <div class="form-group">
-            <label for="inicioFerias">Data de Início</label>
-            <input type="date" id="inicioFerias" name="inicioFerias" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="dias">Número de Dias</label>
-            <input type="number" id="dias" name="dias" class="form-control" required />
-        </div>
-        <button type="submit" class="btn btn-primary">Registrar</button>
-    </form>
-</div>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<h2>Registro de Férias</h2>
+<form th:action="@{/registroFerias}" th:object="${registroFeriasRequest}" method="post">
+    <div>
+        <label for="funcionarioId">Funcionário:</label>
+        <select id="funcionarioId" name="funcionarioId" required>
+            <option value="">Selecione um Funcionário</option>
+            <option th:each="funcionario : ${funcionarios}" th:value="${funcionario.id}" th:text="${funcionario.nome}">Nome do Funcionário</option>
+        </select>
+    </div>
+    <div>
+        <label for="inicioFerias">Data de Início:</label>
+        <input type="date" id="inicioFerias" name="inicioFerias" th:field="*{inicioFerias}" required />
+    </div>
+    <div>
+        <label for="dias">Duração (dias):</label>
+        <input type="number" id="dias" name="dias" th:field="*{dias}" required />
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary mt-4">Cadastrar</button>
+    </div>
+</form>
 </body>
 </html>

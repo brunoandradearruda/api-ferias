@@ -2,11 +2,14 @@ package com.seplagpb.apiferiasseplagpb.service;
 
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasAtrasadasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
+import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.repository.FuncionarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -19,12 +22,16 @@ public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
 
+
+
     @Autowired
     public FuncionarioService(FuncionarioRepository funcionarioRepository) {
         this.funcionarioRepository = funcionarioRepository;
     }
 
-
+    public List<Funcionario> findAll() {
+        return funcionarioRepository.findAll();
+    }
 
     public Funcionario salvarFuncionario(Funcionario funcionario) {
         // Deixe o campo de dias de férias restantes como null
@@ -245,6 +252,8 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id);
     }
 }
+
+
 
 
 

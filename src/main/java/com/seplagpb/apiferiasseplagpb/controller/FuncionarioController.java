@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -111,7 +112,41 @@ public class FuncionarioController {
         return funcionarioService.listarFuncionariosCadastrados();
     }
 
-    
+
+    @GetMapping("/funcionarios/{id}/registroFerias")
+    public String mostrarFormularioRegistroFerias(@PathVariable Long id, Model model) {
+        RegistrarFeriasRequest registroFeriasRequest = new RegistrarFeriasRequest(); // Instancia um novo objeto
+        model.addAttribute("id", id);
+        model.addAttribute("registroFeriasRequest", registroFeriasRequest); // Adiciona ao modelo
+        return "ferias/registroFerias";
+    }
+
+    @PostMapping("/funcionarios/{id}/registroFerias")
+    public String registrarFerias(@PathVariable Long id, @ModelAttribute RegistrarFeriasRequest registroFeriasRequest, Model model) {
+        // Lógica para registrar as férias do funcionário
+        return "ferias/registroFerias"; // Redirecione para uma página de confirmação
+    }
+
+//    @GetMapping("/registroFerias")
+//    public String mostrarFormularioRegistroFerias(Model model) {
+//        List<Funcionario> funcionarios = funcionarioService.findAll(); // Assumindo que você tem um serviço para buscar funcionários
+//        RegistrarFeriasRequest registroFeriasRequest = new RegistrarFeriasRequest();
+//        model.addAttribute("funcionarios", funcionarios);
+//        model.addAttribute("registroFeriasRequest", registroFeriasRequest);
+//        return "ferias/registroFerias";
+//    }
+//
+//
+//    @PostMapping("/registroFerias")
+//    public String registrarFerias(@ModelAttribute RegistrarFeriasRequest registroFeriasRequest, RedirectAttributes redirectAttributes) {
+//        // Aqui você iria processar o registro de férias, por exemplo, salvando no banco de dados
+//        // Não esqueça de tratar erros e validar os dados!
+//
+//        redirectAttributes.addFlashAttribute("mensagemSucesso", "Férias registradas com sucesso!");
+//        return "ferias/registroFerias";
+//    }
+
+
 
 
 }
