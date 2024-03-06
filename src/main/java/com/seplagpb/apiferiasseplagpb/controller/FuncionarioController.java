@@ -82,6 +82,8 @@ public class FuncionarioController {
     }
 
 
+
+
     @GetMapping("/em-ferias")
     public List<Funcionario> funcionariosEmFerias() {
         LocalDate dataAtual = LocalDate.now();
@@ -108,6 +110,9 @@ public class FuncionarioController {
 
         return funcionarioService.listarFuncionariosCadastrados();
     }
+
+    
+
 
 }
 

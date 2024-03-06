@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -234,7 +235,18 @@ public class FuncionarioService {
                 })
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com o ID: " + id));
     }
+
+    public List<Funcionario> listarTodos() {
+        return funcionarioRepository.findAll();
+    }
+
+
+    public Optional<Funcionario> findById(Long id) {
+        return funcionarioRepository.findById(id);
+    }
 }
+
+
 
 
 

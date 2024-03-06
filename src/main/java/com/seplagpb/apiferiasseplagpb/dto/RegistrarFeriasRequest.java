@@ -7,6 +7,7 @@ import java.time.LocalDate;
 @Data
 
 public class RegistrarFeriasRequest {
+    private Long funcionarioId;
     private LocalDate inicioFerias;
     private int dias;
 
@@ -27,4 +28,13 @@ public class RegistrarFeriasRequest {
     public void setDias(int dias) {
         this.dias = dias;
     }
+
+    public Long getFuncionarioId() {
+        return funcionarioId;
+
+
+    }
+
+
+
 }

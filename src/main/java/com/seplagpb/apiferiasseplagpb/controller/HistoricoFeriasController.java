@@ -1,5 +1,4 @@
 package com.seplagpb.apiferiasseplagpb.controller;
-
 import com.seplagpb.apiferiasseplagpb.dto.HistoricoFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.service.HistoricoFeriasService;
 import org.springframework.beans.factory.annotation.Autowired;

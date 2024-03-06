@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funcionários em Férias</title>
+
+    <!-- Carregando Bootstrap do WebJar -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <!-- Adicione os outros itens do menu conforme necessário -->
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/funcionarios-em-ferias">Funcionários em Férias</a>
+            </li>
+            <!-- Adicione outros itens conforme necessário -->
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h2>Funcionários em Férias</h2>
+
+    <!-- Tabela para exibir os funcionários em férias -->
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Matrícula</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Setor</th>
+            <th scope="col">Função</th>
+            <th scope="col">Data Início</th>
+            <th scope="col">Data Término</th>
+            <!-- Adicione mais colunas conforme necessário -->
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Itera sobre a lista de funcionários em férias -->
+        <tr th:each="funcionario : ${funcionariosEmFerias}">
+            <td th:text="${funcionario.matricula}"></td>
+            <td th:text="${funcionario.nome}"></td>
+            <td th:text="${funcionario.cpf}"></td>
+            <td th:text="${funcionario.cargo}"></td>
+            <td th:text="${funcionario.setor}"></td>
+            <td th:text="${funcionario.funcao}"></td>
+            <td th:text="${funcionario.inicioFerias}"></td>
+            <td th:text="${funcionario.fimFerias}"></td>
+            <!-- Adicione mais colunas conforme necessário -->
+        </tr>
+        </tbody>
+    </table>
+
+    <!-- Link para voltar à página inicial -->
+    <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
+</div>
+
+<!-- Carregando Bootstrap JS e Popper.js do WebJar -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<!--<script th:src="@{/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js}"></script>-->
+</body>
+</html>
