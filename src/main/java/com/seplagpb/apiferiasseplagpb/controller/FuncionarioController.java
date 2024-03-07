@@ -127,28 +127,6 @@ public class FuncionarioController {
         return "ferias/registroFerias"; // Redirecione para uma página de confirmação
     }
 
-//    @GetMapping("/registroFerias")
-//    public String mostrarFormularioRegistroFerias(Model model) {
-//        List<Funcionario> funcionarios = funcionarioService.findAll(); // Assumindo que você tem um serviço para buscar funcionários
-//        RegistrarFeriasRequest registroFeriasRequest = new RegistrarFeriasRequest();
-//        model.addAttribute("funcionarios", funcionarios);
-//        model.addAttribute("registroFeriasRequest", registroFeriasRequest);
-//        return "ferias/registroFerias";
-//    }
-//
-//
-//    @PostMapping("/registroFerias")
-//    public String registrarFerias(@ModelAttribute RegistrarFeriasRequest registroFeriasRequest, RedirectAttributes redirectAttributes) {
-//        // Aqui você iria processar o registro de férias, por exemplo, salvando no banco de dados
-//        // Não esqueça de tratar erros e validar os dados!
-//
-//        redirectAttributes.addFlashAttribute("mensagemSucesso", "Férias registradas com sucesso!");
-//        return "ferias/registroFerias";
-//    }
-
-
-
-
 }
 
 

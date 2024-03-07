@@ -49,12 +49,21 @@
     </div>
 </nav>
 
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="card">
                 <h5 class="card-header">Registro de Férias</h5>
                 <div class="card-body">
+                    <!-- Mensagem de sucesso -->
+                    <div th:if="${not #strings.isEmpty(mensagemSucesso)}" class="alert alert-success">
+                        <p th:text="${mensagemSucesso}"></p>
+                    </div>
+                    <!-- Mensagem de erro -->
+                    <div th:if="${not #strings.isEmpty(mensagemErro)}" class="alert alert-danger">
+                        <p th:text="${mensagemErro}"></p>
+                    </div>
                     <form th:action="@{/registroFerias}" th:object="${registroFeriasRequest}" method="post">
                         <div class="form-group">
                             <label for="funcionarioId">Funcionário:</label>
@@ -65,11 +74,11 @@
                         </div>
                         <div class="form-group">
                             <label for="inicioFerias">Data de Início:</label>
-                            <input type="date" id="inicioFerias" name="inicioFerias" th:field="*{inicioFerias}" class="form-control" required />
+                            <input type="date" id="inicioFerias" name="inicioFerias" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <label for="dias">Duração (dias):</label>
-                            <input type="number" id="dias" name="dias" th:field="*{dias}" class="form-control" required />
+                            <input type="number" id="dias" name="dias" class="form-control" required />
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Registrar Férias</button>

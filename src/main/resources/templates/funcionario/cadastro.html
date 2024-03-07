@@ -28,7 +28,8 @@
             </li>
             <li class="nav-item active">
                 <div class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios"
+                       role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Funcionários
                     </a>
@@ -45,9 +46,9 @@
                         Férias
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
-                        <a class="dropdown-item" href="/ferias/cadastrar">Cadastrar</a>
-                        <a class="dropdown-item" href="/historico-ferias/historicoFerias">Histórico</a>
-                        <a class="dropdown-item" href="/ferias/em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/registroFerias">Cadastrar</a>
+                        <a class="dropdown-item" href="/historicoFeriasModel">Histórico</a>
+                        <a class="dropdown-item" href="/funcionarios-em-ferias">Em Férias</a>
                         <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
                         <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
                     </div>
@@ -63,110 +64,122 @@
 
     <!-- Formulário de cadastro -->
     <form th:action="@{/cadastro}" th:object="${funcionarios}" method="post">
-        <!-- Informações Pessoais -->
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" name="nome" required>
-        </div>
-        <div class="mb-3">
-            <label for="sexo" class="form-label">Sexo</label>
-            <input type="text" class="form-control" id="sexo" name="sexo" required>
-        </div>
+        <!-- Informações Pessoaisa -->
 
-        <div class="mb-3">
-            <label for="pisPasep" class="form-label">PIS/PASEP</label>
-            <input type="text" class="form-control" id="pisPasep" name="PisPasep" required>
-        </div>
+        <div class="row g-3 mb-3">
+            <div class="col-md-2"> <!-- Diminui a largura do campo matrícula -->
+                <label for="matricula" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" id="matricula" name="matricula" required
+                       placeholder="184.351-6">
+            </div>
+            <div class="col-md-6"> <!-- Ajusta o campo nome para ocupar mais espaço -->
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" required>
+            </div>
+            <div class="col-md-4"> <!-- Ajusta o campo setor para ocupar mais espaço -->
+                <label for="setor" class="form-label">Setor</label>
+                <input type="text" class="form-control" id="setor" name="setor" required>
+            </div>
 
-        <div class="mb-3">
-            <label for="cpf" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="cpf" name="cpf" required>
-        </div>
-        <div class="mb-3">
-            <label for="identidade" class="form-label">Identidade</label>
-            <input type="text" class="form-control" id="identidade" name="identidade" required>
-        </div>
-        <div class="mb-3">
-            <label for="orgaoExpedidor" class="form-label">Orgão Expedidor</label>
-            <input type="text" class="form-control" id="orgaoExpedidor" name="orgaoExpedidor" required>
-        </div>
-        <div class="mb-3">
-            <label for="dataNascimento" class="form-label">Data de Nascimento</label>
-            <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
-        </div>
+            <div class="col-md-3"> <!-- Ajusta para uma proporção adequada para o campo Função -->
+                <label for="funcao" class="form-label">Função</label>
+                <input type="text" class="form-control" id="funcao" name="funcao" required>
+            </div>
+            <div class="col-md-3"> <!-- Ajusta para uma proporção adequada para o campo Unidade de Trabalho -->
+                <label for="unidadeTrabalho" class="form-label">Unidade de Trabalho</label>
+                <input type="text" class="form-control" id="unidadeTrabalho" name="unidadeTrabalho" required>
+            </div>
+            <div class="col-md-3"> <!-- Ajusta para uma proporção adequada para o campo Cargo -->
+                <label for="cargo" class="form-label">Cargo</label>
+                <input type="text" class="form-control" id="cargo" name="cargo" required>
+            </div>
+            <div class="col-md-3"> <!-- Ajusta para uma proporção adequada para o campo Símbolo -->
+                <label for="simbolo" class="form-label">Símbolo</label>
+                <input type="text" class="form-control" id="simbolo" name="simbolo" required>
+            </div>
+            
+                <div class="col-md-2">
+                    <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+                </div>
+                <div class="col-md-1">
+                    <label for="sexo" class="form-label">Sexo</label>
+                    <input type="text" class="form-control" id="sexo" name="sexo" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="pisPasep" class="form-label">PIS/PASEP</label>
+                    <input type="text" class="form-control" id="pisPasep" name="pisPasep" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="cpf" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="identidade" class="form-label">RG</label>
+                    <input type="text" class="form-control" id="identidade" name="identidade" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="orgaoExpedidor" class="form-label">Orgão Expedidor</label>
+                    <input type="text" class="form-control" id="orgaoExpedidor" name="orgaoExpedidor" required>
+                </div>
+            </div>
 
-        <!-- Informações de Contato -->
-        <div class="mb-3">
-            <label for="email" class="form-label">E-mail</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-            <label for="celular" class="form-label">Celular</label>
-            <input type="tel" class="form-control" id="celular" name="celular" required>
-        </div>
 
-        <!-- Endereço -->
-        <div class="mb-3">
-            <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="endereco" name="endereco" required>
-        </div>
-        <div class="mb-3">
-            <label for="bairro" class="form-label">Bairro</label>
-            <input type="text" class="form-control" id="bairro" name="bairro" required>
-        </div>
-        <div class="mb-3">
-            <label for="numero" class="form-label">Número</label>
-            <input type="text" class="form-control" id="numero" name="numero" required>
-        </div>
-        <div class="mb-3">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep" required>
-        </div>
-        <div class="mb-3">
-            <label for="complemento" class="form-label">Complemento</label>
-            <input type="text" class="form-control" id="complemento" name="complemento">
-        </div>
-        <div class="mb-3">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="cidade" name="cidade" required>
-        </div>
-        <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <input type="text" class="form-control" id="estado" name="estado" required>
-        </div>
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <label for="email" class="form-label">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="col-md-6">
+                    <label for="celular" class="form-label">Celular</label>
+                    <input type="tel" class="form-control" id="celular" name="celular" required>
+                </div>
+            </div>
 
-        <!-- Informações Profissionais -->
-        <div class="mb-3">
-            <label for="matricula" class="form-label">Matrícula</label>
-            <input type="text" class="form-control" id="matricula" name="matricula" required>
-        </div>
-        <div class="mb-3">
-            <label for="cargo" class="form-label">Cargo</label>
-            <input type="text" class="form-control" id="cargo" name="cargo" required>
-        </div>
-        <div class="mb-3">
-            <label for="simbolo" class="form-label">Símbolo</label>
-            <input type="text" class="form-control" id="simbolo" name="simbolo" required>
-        </div>
-        <div class="mb-3">
-            <label for="funcao" class="form-label">Função</label>
-            <input type="text" class="form-control" id="funcao" name="funcao" required>
-        </div>
-        <div class="mb-3">
-            <label for="setor" class="form-label">Setor</label>
-            <input type="text" class="form-control" id="setor" name="setor" required>
-        </div>
-        <div class="mb-3">
-            <label for="unidadeTrabalho" class="form-label">Unidade de Trabalho</label>
-            <input type="text" class="form-control" id="unidadeTrabalho" name="unidadeTrabalho" required>
-        </div>
-        <div class="mb-3">
-            <label for="dataAdmissao" class="form-label">Data de Admissão</label>
-            <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" required>
-        </div>
 
-        <!-- Botão de Cadastro -->
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-2">
+                    <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" name="cep" required>
+                </div>
+                <div class="col-md-3">
+                    <label for="endereco" class="form-label">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" name="endereco" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" name="bairro" required>
+                </div>
+                <div class="col-md-1">
+                    <label for="numero" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="numero" name="numero" required>
+                </div>
+                <div class="col-md-2">
+                    <label for="complemento" class="form-label">Complemento</label>
+                    <input type="text" class="form-control" id="complemento" name="complemento">
+                </div>
+                <div class="col-md-1">
+                    <label for="cidade" class="form-label">Cidade</label>
+                    <input type="text" class="form-control" id="cidade" name="cidade" required>
+                </div>
+                <div class="col-md-1">
+                    <label for="estado" class="form-label">Estado</label>
+                    <input type="text" class="form-control" id="estado" name="estado" required>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="mb-3">
+                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" required>
+            </div>
+
+            <!-- Botão de Cadastro -->
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
 

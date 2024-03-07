@@ -1,5 +1,4 @@
 package com.seplagpb.apiferiasseplagpb.service;
-
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasAtrasadasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
@@ -8,9 +7,6 @@ import com.seplagpb.apiferiasseplagpb.repository.FuncionarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -32,6 +28,21 @@ public class FuncionarioService {
     public List<Funcionario> findAll() {
         return funcionarioRepository.findAll();
     }
+
+    public boolean verificaFeriasRegistradas(Long funcionarioId, LocalDate inicioFerias, int dias) {
+        Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
+                .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado com ID: " + funcionarioId));
+        LocalDate fimFerias = inicioFerias.plusDays(dias - 1);
+
+        // Verificar se as datas de férias solicitadas se sobrepõem a qualquer férias existentes
+        // Esta é uma lógica de exemplo; ajuste de acordo com a sua implementação
+        if (funcionario.getInicioFerias() != null && !fimFerias.isBefore(funcionario.getInicioFerias()) &&
+                !inicioFerias.isAfter(funcionario.getFimFerias())) {
+            return true; // Já existem férias registradas neste período
+        }
+        return false; // Não existem férias registradas neste período, registro é permitido
+    }
+
 
     public Funcionario salvarFuncionario(Funcionario funcionario) {
         // Deixe o campo de dias de férias restantes como null
@@ -252,6 +263,8 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id);
     }
 }
+
+
 
 
 
