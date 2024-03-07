@@ -97,7 +97,7 @@
                 <label for="simbolo" class="form-label">Símbolo</label>
                 <input type="text" class="form-control" id="simbolo" name="simbolo" required>
             </div>
-            
+
                 <div class="col-md-2">
                     <label for="dataNascimento" class="form-label">Data de Nascimento</label>
                     <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
@@ -124,21 +124,27 @@
                 </div>
             </div>
 
-
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <label for="email" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="celular" class="form-label">Celular</label>
-                    <input type="tel" class="form-control" id="celular" name="celular" required>
-                </div>
+        <div class="row g-2 mb-3">
+            <div class="col-md-4">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" required>
             </div>
 
+            <div class="col-md-3">
+                <label for="celular" class="form-label">Celular</label>
+                <input type="tel" class="form-control" id="celular" name="celular" required>
+            </div>
+
+            <div class="col-md-3">
+                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" required>
+            </div>
+        </div>
 
 
-            <div class="row g-3 mb-3">
+
+
+        <div class="row g-3 mb-3">
                 <div class="col-md-2">
                     <label for="cep" class="form-label">CEP</label>
                     <input type="text" class="form-control" id="cep" name="cep" required>
@@ -170,27 +176,40 @@
             </div>
 
 
-
-
-
-            <div class="mb-3">
-                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
-                <input type="date" class="form-control" id="dataAdmissao" name="dataAdmissao" required>
-            </div>
-
             <!-- Botão de Cadastro -->
             <button type="submit" class="btn btn-primary">Cadastrar</button>
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+
+<script>
+    document.getElementById('cep').addEventListener('blur', function(e) {
+        var cep = e.target.value.replace(/\D/g, ''); // Remove máscara do CEP, se houver
+        if(cep.length !== 8) {
+            alert("CEP inválido!");
+            return;
+        }
+        var url = `https://viacep.com.br/ws/${cep}/json/`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if(data.erro) {
+                    alert("CEP não encontrado!");
+                    return;
+                }
+                document.getElementById('endereco').value = data.logradouro;
+                document.getElementById('bairro').value = data.bairro;
+                document.getElementById('cidade').value = data.localidade;
+                document.getElementById('estado').value = data.uf;
+            })
+            .catch(error => console.error('Erro ao consultar o CEP:', error));
+    });
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="js/cep.js"></script> <!-- Inclua o caminho correto para o seu arquivo js/cep.js -->
 </body>
 </html>
