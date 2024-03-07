@@ -50,8 +50,7 @@ public class FuncionarioController {
         return ResponseEntity.ok(Map.of("temDireitoAFerias", temDireito));
     }
 
-
-    @DeleteMapping("/excluir/{id}")
+    @PostMapping("/excluir/{id}")
     public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
@@ -60,6 +59,19 @@ public class FuncionarioController {
             return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
         }
     }
+
+
+
+    @DeleteMapping("/excluir/{id}")
+    public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
+        try {
+            funcionarioService.deletarFuncionario(id);
+            return ResponseEntity.ok("Excluído com sucesso"); // Retorna uma resposta 200 OK com a mensagem
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
+        }
+    }
+
 
 
     @GetMapping("/ferias-pendentes")
@@ -125,6 +137,13 @@ public class FuncionarioController {
     public String registrarFerias(@PathVariable Long id, @ModelAttribute RegistrarFeriasRequest registroFeriasRequest, Model model) {
         // Lógica para registrar as férias do funcionário
         return "ferias/registroFerias"; // Redirecione para uma página de confirmação
+    }
+
+    @GetMapping("/funcionarios/excluir/{id}") // Use @GetMapping se você não configurou o suporte ao método DELETE
+    public String excluirFuncionario(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        funcionarioService.excluirPorId(id);
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Funcionário excluído com sucesso.");
+        return "redirect:/funcionarios/listar"; // Substitua "/funcionarios/listar" pelo endpoint correto
     }
 
 }

@@ -1,4 +1,5 @@
 package com.seplagpb.apiferiasseplagpb.service;
+
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasAtrasadasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
@@ -7,6 +8,7 @@ import com.seplagpb.apiferiasseplagpb.repository.FuncionarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -17,7 +19,6 @@ import java.util.stream.Collectors;
 public class FuncionarioService {
 
     private final FuncionarioRepository funcionarioRepository;
-
 
 
     @Autowired
@@ -260,8 +261,20 @@ public class FuncionarioService {
 
 
     public Optional<Funcionario> findById(Long id) {
+
         return funcionarioRepository.findById(id);
     }
+
+    public void excluirPorId(Long id) {
+        // Verifica se o funcionário existe antes de tentar excluir
+        if (funcionarioRepository.existsById(id)) {
+            funcionarioRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException("Funcionário com ID " + id + " não encontrado.");
+        }
+    }
+
+
 }
 
 

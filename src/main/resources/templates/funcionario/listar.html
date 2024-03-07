@@ -81,16 +81,19 @@
             <td th:text="${funcionario.funcao}"></td>
             <td>
                 <!-- Botão de Visualizar -->
+                <!-- Botão de Visualizar -->
                 <a th:href="@{/funcionarios/visualizar/{id}(id=${funcionario.id})}" class="btn btn-primary btn-sm">Visualizar</a>
 
                 <!-- Botão de Editar -->
                 <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-warning btn-sm">Editar</a>
 
-                <!-- Botão de Excluir (use um formulário para enviar uma solicitação DELETE) -->
-                <form th:action="@{/funcionarios/excluir/{id}(id=${funcionario.id})}" method="post" class="d-inline">
+                <!-- Botão de Excluir -->
+                <form th:action="@{/funcionarios/excluir/{id}(id=${funcionario.id})}" method="post" class="d-inline" onsubmit="excluirFuncionario(this)">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza de que deseja excluir este funcionário?');">Excluir</button>
                 </form>
+
+
             </td>
             <!-- Adicione mais colunas conforme necessário -->
         </tr>
@@ -102,6 +105,33 @@
 </div>
 
 <!-- Carregando Bootstrap JS e Popper.js do WebJar -->
+
+<script>
+    function excluirFuncionario(form) {
+        event.preventDefault();
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                // Inclua outros cabeçalhos necessários, como tokens CSRF
+            },
+        })
+            .then(response => {
+                if (response.ok) {
+                    alert('Funcionário excluído com sucesso');
+                    location.reload(); // Recarrega a página
+                } else {
+                    alert('Erro ao excluir funcionário');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
