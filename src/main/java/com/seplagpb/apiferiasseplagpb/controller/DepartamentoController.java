@@ -7,6 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/departamentos")
 public class DepartamentoController {
@@ -31,10 +33,25 @@ public class DepartamentoController {
     }
 
     @PostMapping("/salvar")
-    public String salvarDepartamento(@RequestBody Departamento departamento) {
-        departamentoService.salvarDepartamento(departamento);
-        return "redirect:/departamentos/cadastrar";
+    public String salvarDepartamento(@ModelAttribute("departamento") Departamento departamento, Model model) {
+        departamento.setUnidadeTrabalho("SEPLAG"); // Define a unidade de trabalho como SEPLAG
+        String nomeDepartamento = departamento.getNomeDepartamento().toUpperCase(); // Converter para maiúsculas
+        List<Departamento> departamentos = departamentoService.listarDepartamentos();
+
+        // Verificar se o departamento já está cadastrado
+        boolean departamentoExistente = departamentos.stream()
+                .anyMatch(dep -> dep.getNomeDepartamento().toUpperCase().equals(nomeDepartamento));
+
+        if (departamentoExistente) {
+            model.addAttribute("mensagem", "Departamento já cadastrado.");
+            return "departamentos/cadastro";
+        } else {
+            departamento.setNomeDepartamento(nomeDepartamento); // Garantir que o nome seja maiúsculo
+            departamentoService.salvarDepartamento(departamento);
+            return "redirect:/departamentos/cadastrar";
+        }
     }
+
 
 
 
