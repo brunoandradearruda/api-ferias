@@ -76,10 +76,20 @@
                 <label for="nome" class="form-label">Nome</label>
                 <input type="text" class="form-control" id="nome" name="nome" required>
             </div>
-            <div class="col-md-4"> <!-- Ajusta o campo setor para ocupar mais espaço -->
+
+            <div class="col-md-4">
                 <label for="setor" class="form-label">Setor</label>
-                <input type="text" class="form-control" id="setor" name="setor" required>
+                <select class="form-control" id="setor" name="setor">
+                    <option value="">Selecione o Departamento</option>
+                    <option th:each="departamento : ${departamentos}" th:value="${departamento.id}" th:text="${departamento.nomeDepartamento}"></option>
+                </select>
             </div>
+
+
+
+
+
+
 
             <div class="col-md-3"> <!-- Ajusta para uma proporção adequada para o campo Função -->
                 <label for="funcao" class="form-label">Função</label>

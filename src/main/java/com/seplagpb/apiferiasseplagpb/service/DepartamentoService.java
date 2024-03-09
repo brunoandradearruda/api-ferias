@@ -17,6 +17,16 @@ public class DepartamentoService {
         this.departamentoRepository = departamentoRepository;
     }
 
+    public void editarDepartamento(Departamento departamento) {
+        // Verifica se o departamento existe no banco de dados antes de editar
+        if (departamentoRepository.existsById(departamento.getId())) {
+            // Atualiza o departamento no banco de dados
+            departamentoRepository.save(departamento);
+        } else {
+            throw new RuntimeException("Departamento não encontrado para edição.");
+        }
+    }
+
     public List<Departamento> listarDepartamentos() {
         return departamentoRepository.findAll();
     }
@@ -29,7 +39,16 @@ public class DepartamentoService {
         return departamentoRepository.save(departamento);
     }
 
+
     public void excluirDepartamento(Long id) {
         departamentoRepository.deleteById(id);
     }
+
+    public List<Departamento> listarTodos() {
+        return departamentoRepository.findAll();
+    }
+
+
 }
+
+

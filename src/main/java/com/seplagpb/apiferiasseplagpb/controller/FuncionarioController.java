@@ -70,6 +70,8 @@ public class FuncionarioController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
         }
+
+
     }
 
 
@@ -145,6 +147,8 @@ public class FuncionarioController {
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Funcionário excluído com sucesso.");
         return "redirect:/funcionarios/listar"; // Substitua "/funcionarios/listar" pelo endpoint correto
     }
+
+
 
 }
 

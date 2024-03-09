@@ -7,12 +7,102 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+
+<style>
+    .departamento-cor-1 {
+        background-color: #f2f2f2; /* Cor de fundo clara */
+    }
+    .departamento-cor-2 {
+        background-color: #d9edf7; /* Cor de fundo um pouco mais escura */
+    }
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+                        <a class="dropdown-item" href="/cadastro">Cadastro</a>
+                        <a class="dropdown-item" href="/funcionarios/listar">Listar</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFerias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Férias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/registroFerias">Cadastrar</a>
+                        <a class="dropdown-item" href="/historicoFeriasModel">Histórico</a>
+                        <a class="dropdown-item" href="/funcionarios-em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
+                        <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Novo menu "Departamento" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownDepartamento" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departamento
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownDepartamento">
+                        <a class="dropdown-item" href="/departamento/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/departamento/exibir">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Cargos" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownCargos" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cargos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCargos">
+                        <a class="dropdown-item" href="/cargos/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/cargos/exibir">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Ocorrências" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownOcorrencias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ocorrências
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownOcorrencias">
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Afastamento</a>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+        </ul>
+    </div>
+</nav>
 <div class="container mt-5">
     <h2>Lista de Departamentos</h2>
-    <!-- Verifica se existe uma mensagem e a exibe em caso positivo -->
-    <div th:if="${mensagem}" class="alert alert-success" role="alert">
-        <span th:text="${mensagem}"></span>
-    </div>
     <table class="table">
         <thead>
         <tr>
@@ -59,6 +149,7 @@
 </div>
 
 <!-- Modal de Edição -->
+<!-- Modal de Edição -->
 <div th:each="departamento : ${departamentos}" class="modal fade" th:id="'editarModal' + ${departamento.id}" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -68,26 +159,47 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <!-- Formulário de Edição -->
-                <form th:action="@{/departamentos/editar}" th:object="${departamento}" method="post">
+            <form th:action="@{/departamentos/editar}" th:object="${departamento}" method="post">
+                <div class="modal-body">
+                    <!-- Formulário de Edição -->
                     <div class="form-group">
                         <label for="unidadeTrabalho">Unidade de Trabalho:</label>
                         <input type="text" class="form-control" id="unidadeTrabalho" value="SEPLAG" readonly>
+                        <!-- Campo oculto para enviar o valor de Unidade de Trabalho -->
+                        <input type="hidden" name="unidadeTrabalho" value="SEPLAG">
                     </div>
                     <div class="form-group">
                         <label for="nomeDepartamento">Nome do Departamento:</label>
                         <input type="text" class="form-control" id="nomeDepartamento" name="nomeDepartamento" th:value="${departamento.nomeDepartamento}">
+                        <!-- Campo oculto para enviar o ID do departamento -->
+                        <input type="hidden" name="id" th:value="${departamento.id}">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary" form="editarForm[[${departamento.id}]]">Salvar</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Seleciona todas as linhas na tabela de departamentos
+        var linhas = document.querySelectorAll("table tr");
+
+        linhas.forEach(function(linha, index) {
+            // Aplica classe baseada na paridade do índice
+            if (index % 2 === 0) {
+                linha.classList.add("departamento-cor-1");
+            } else {
+                linha.classList.add("departamento-cor-2");
+            }
+        });
+    });
+</script>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

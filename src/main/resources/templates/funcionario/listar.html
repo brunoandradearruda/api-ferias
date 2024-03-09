@@ -1,76 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Departamentos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Lista de Funcionários</title>
+
+    <!-- Carregando Bootstrap do WebJar -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.0/css/bootstrap.min.css}">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+                        <a class="dropdown-item" href="/cadastro">Cadastro</a>
+                        <a class="dropdown-item" href="/funcionarios/listar">Listar</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFerias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Férias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/ferias/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/historico-ferias/historicoFerias">Histórico</a>
+                        <a class="dropdown-item" href="/ferias/em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
+                        <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownDepartamentos" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departamentos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/ferias/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/historico-ferias/historicoFerias">Listar</a>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div class="container mt-5">
-    <h2>Lista de Departamentos</h2>
+    <h2>Lista de Funcionários Cadastrados</h2>
+
+    <!-- Tabela para exibir a lista de funcionários -->
     <table class="table">
         <thead>
         <tr>
-            <th>Unidade de Trabalho</th>
-            <th>Nome do Departamento</th>
-            <th>Ações</th>
+            <th scope="col">Matrícula</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col">Cargo</th>
+            <th scope="col">Setor</th>
+            <th scope="col">Função</th>
+            <th scope="col">Ações</th>
         </tr>
         </thead>
         <tbody>
-        <!-- Loop sobre os departamentos -->
-        <tr th:each="departamento : ${departamentos}">
-            <td th:text="${departamento.unidadeTrabalho}"></td>
-            <td th:text="${departamento.nomeDepartamento}"></td>
+        <!-- Itera sobre a lista de funcionários e exibe cada um na tabela -->
+        <tr th:each="funcionario : ${funcionarios}">
+            <td th:text="${funcionario.matricula}"></td>
+            <td th:text="${funcionario.nome}"></td>
+            <td th:text="${funcionario.cpf}"></td>
+            <td th:text="${funcionario.cargo}"></td>
+            <td th:text="${funcionario.setor}"></td>
+            <td th:text="${funcionario.funcao}"></td>
             <td>
-                <!-- Botão de Excluir -->
-                <form th:action="@{/departamentos/excluir}" method="post" style="display: inline;">
-                    <input type="hidden" th:name="id" th:value="${departamento.id}">
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-                </form>
+                <!-- Botão de Visualizar -->
+                <a th:href="@{/funcionarios/visualizar/{id}(id=${funcionario.id})}" class="btn btn-primary btn-sm">Visualizar</a>
 
                 <!-- Botão de Editar -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">Editar</button>
+                <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-warning btn-sm">Editar</a>
+
+                <!-- Botão de Excluir (use um formulário para enviar uma solicitação DELETE) -->
+                <form th:action="@{/funcionarios/excluir/{id}(id=${funcionario.id})}" method="post" class="d-inline">
+                    <input type="hidden" name="_method" value="DELETE" />
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
             </td>
         </tr>
         </tbody>
     </table>
+
+    <!-- Link para voltar à página inicial -->
+    <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
 </div>
 
-<!-- Modal de Edição -->
-<div th:each="departamento : ${departamentos}" class="modal fade" th:id="'editarModal' + ${departamento.id}" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editarModalLabel">Editar Departamento</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulário de Edição -->
-                <form th:action="@{/departamentos/editar}" th:object="${departamento}" method="post">
-                    <div class="form-group">
-                        <label for="unidadeTrabalho">Unidade de Trabalho:</label>
-                        <input type="text" class="form-control" id="unidadeTrabalho" value="SEPLAG" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="nomeDepartamento">Nome do Departamento:</label>
-                        <input type="text" class="form-control" id="nomeDepartamento" name="nomeDepartamento" th:value="${departamento.nomeDepartamento}">
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="submit" class="btn btn-primary">Salvar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+<!-- Carregando Bootstrap JS e Popper.js do WebJar -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
