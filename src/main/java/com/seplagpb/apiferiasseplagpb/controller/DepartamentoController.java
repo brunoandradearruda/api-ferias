@@ -21,7 +21,7 @@ public class DepartamentoController {
     @GetMapping("/listar")
     public String listarDepartamentos(Model model) {
         model.addAttribute("departamentos", departamentoService.listarDepartamentos());
-        return "departamentos";
+        return "departamentos/listar";
     }
 
     @GetMapping("/cadastrar")

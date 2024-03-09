@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Departamentos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .cor1 {
+            background-color: lightblue;
+        }
+        .cor2 {
+            background-color: lightgreen;
+        }
+        /* Adicione mais estilos de cor conforme necessário */
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Listagem de Departamentos</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Unidade de Trabalho</th>
+            <th>Nome do Departamento</th>
+        </tr>
+        </thead>
+        <tbody id="departamentosTableBody">
+        <!-- Utilizando Thymeleaf para iterar sobre os departamentos -->
+        <!-- Adicione a classe CSS de cor com base no índice do departamento -->
+        <tr th:each="departamento, iterStat : ${departamentos}" th:class="${iterStat.index % 2 == 0 ? 'cor1' : 'cor2'}">
+            <td th:text="${departamento.id}">ID</td>
+            <td th:text="${departamento.unidadeTrabalho}">Unidade de Trabalho</td>
+            <td th:text="${departamento.nomeDepartamento}">Nome do Departamento</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Não é necessário o JavaScript para carregar os departamentos, pois eles já estão sendo passados pelo controlador -->
+
+</body>
+</html>
