@@ -119,9 +119,9 @@
 
             <div class="col-md-4">
                 <label for="setor" class="form-label">Setor</label>
-                <select class="form-control" id="setor" name="setor">
+                <select class="form-control" id="setor" name="setor" required>
                     <option value="">Selecione o Departamento</option>
-                    <option th:each="departamento : ${departamentos}" th:value="${departamento.id}" th:text="${departamento.nomeDepartamento}"></option>
+                    <option th:each="departamento : ${departamentos}" th:value="${departamento.nomeDepartamento}" th:text="${departamento.nomeDepartamento}"></option>
                 </select>
             </div>
 
@@ -227,9 +227,36 @@
 
 
             <!-- Botão de Cadastro -->
-            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-save"></i> Cadastrar
+        </button>
+
+        <button type="button" class="btn btn-secondary" onclick="limparCampos()">
+            <i class="fas fa-eraser"></i> Limpar Campos
+        </button>
+
+
     </form>
 </div>
+
+
+<script>
+    function limparCampos() {
+        // Pega todos os elementos de input do tipo 'text', 'email', 'tel', 'date', e 'select'
+        var inputs = document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select');
+
+        // Limpa cada campo
+        inputs.forEach(function(input) {
+            if (input.tagName === "SELECT") {
+                // Para campos select, seleciona a primeira opção
+                input.selectedIndex = 0;
+            } else {
+                // Para outros tipos de input, apenas limpa o valor
+                input.value = "";
+            }
+        });
+    }
+</script>
 
 
 <script>
@@ -256,6 +283,7 @@
             .catch(error => console.error('Erro ao consultar o CEP:', error));
     });
 </script>
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.1/css/all.css}" />
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>

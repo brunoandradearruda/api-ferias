@@ -34,6 +34,16 @@ public class FuncionarioController {
     }
 
 
+//    @PutMapping("/atualizar/{id}")
+//    public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionarioAtualizado) {
+//        try {
+//            Funcionario funcionario = funcionarioService.atualizarFuncionario(id, funcionarioAtualizado);
+//            return ResponseEntity.ok(funcionario);
+//        } catch (EntityNotFoundException e) {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionarioAtualizado) {
         try {
@@ -43,6 +53,7 @@ public class FuncionarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("/{id}/direito-ferias")
     public ResponseEntity<?> verificarDireitoFerias(@PathVariable Long id) {
@@ -147,6 +158,8 @@ public class FuncionarioController {
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Funcionário excluído com sucesso.");
         return "redirect:/funcionarios/listar"; // Substitua "/funcionarios/listar" pelo endpoint correto
     }
+
+
 
 
 

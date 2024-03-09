@@ -10,6 +10,8 @@
 </head>
 <body>
 
+
+
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -94,6 +96,36 @@
     </div>
 </nav>
 
+<!-- Modal Editar Funcionário -->
+<!-- Modal de Edição de Funcionário -->
+<div class="modal fade" id="editEmployeeModal" tabindex="-1" aria-labelledby="editEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editEmployeeModalLabel">Editar Funcionário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+                    <div class="form-group">
+                        <label for="editNome">Nome</label>
+                        <input type="text" class="form-control" id="editNome">
+                    </div>
+                    <!-- Adicione mais campos conforme necessário -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                        <button type="button" id="saveEditBtn" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="container mt-5">
     <h2>Lista de Funcionários Cadastrados</h2>
 
@@ -121,16 +153,26 @@
             <td th:text="${funcionario.funcao}"></td>
             <td>
                 <!-- Botão de Visualizar -->
-                <a th:href="@{/funcionarios/visualizar/{id}(id=${funcionario.id})}" class="btn btn-primary btn-sm">Visualizar</a>
+                <a th:href="@{/funcionarios/visualizar/{id}(id=${funcionario.id})}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-eye"></i> Visualizar
+                </a>
+
 
                 <!-- Botão de Editar -->
-                <a th:href="@{/funcionarios/editar/{id}(id=${funcionario.id})}" class="btn btn-warning btn-sm">Editar</a>
+                <button type="button" class="btn btn-warning btn-sm editButton" data-toggle="modal" data-target="#editEmployeeModal" data-id="${funcionario.id}">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+
+
 
                 <!-- Botão de Excluir (use um formulário para enviar uma solicitação DELETE) -->
                 <form th:action="@{/funcionarios/excluir/{id}(id=${funcionario.id})}" method="post" class="d-inline">
                     <input type="hidden" name="_method" value="DELETE" />
-                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    <button type="submit" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trash"></i> Excluir
+                    </button>
                 </form>
+
             </td>
         </tr>
         </tbody>
@@ -139,6 +181,43 @@
     <!-- Link para voltar à página inicial -->
     <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
 </div>
+<link rel="stylesheet" th:href="@{/webjars/font-awesome/5.15.1/css/all.css}" />
+
+
+<script>
+    function atualizarFuncionario() {
+        const idFuncionario = 123; // substitua pelo id do funcionário que você está editando
+        const url = `/funcionarios/atualizar/${idFuncionario}`;
+        const funcionarioAtualizado = {
+            // inclua os dados atualizados do funcionário aqui
+        };
+
+        fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(funcionarioAtualizado),
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao atualizar o funcionário. Por favor, tente novamente.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Funcionário atualizado com sucesso:', data);
+                // faça o que for necessário após a atualização bem-sucedida (redirecionamento, atualização da interface, etc.)
+            })
+            .catch(error => {
+                console.error('Erro ao atualizar o funcionário:', error.message);
+                // exiba uma mensagem de erro ao usuário ou faça outra ação apropriada
+            });
+    }
+</script>
+
+
+
 
 <!-- Carregando Bootstrap JS e Popper.js do WebJar -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
