@@ -53,11 +53,10 @@ public class DepartamentoController {
     }
 
 
-
-
     @GetMapping("/excluir/{id}")
     public String excluirDepartamento(@PathVariable Long id) {
         departamentoService.excluirDepartamento(id);
         return "redirect:/departamentos/listar";
     }
+
 }

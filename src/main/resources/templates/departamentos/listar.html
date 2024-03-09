@@ -1,44 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listagem de Departamentos</title>
+    <title>Lista de Departamentos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        .cor1 {
-            background-color: lightblue;
-        }
-        .cor2 {
-            background-color: lightgreen;
-        }
-        /* Adicione mais estilos de cor conforme necessário */
-    </style>
 </head>
 <body>
 <div class="container mt-5">
-    <h2>Listagem de Departamentos</h2>
+    <h2>Lista de Departamentos</h2>
+    <!-- Verifica se existe uma mensagem e a exibe em caso positivo -->
+    <div th:if="${mensagem}" class="alert alert-success" role="alert">
+        <span th:text="${mensagem}"></span>
+    </div>
     <table class="table">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Unidade de Trabalho</th>
             <th>Nome do Departamento</th>
+            <th>Ações</th>
         </tr>
         </thead>
-        <tbody id="departamentosTableBody">
-        <!-- Utilizando Thymeleaf para iterar sobre os departamentos -->
-        <!-- Adicione a classe CSS de cor com base no índice do departamento -->
-        <tr th:each="departamento, iterStat : ${departamentos}" th:class="${iterStat.index % 2 == 0 ? 'cor1' : 'cor2'}">
-            <td th:text="${departamento.id}">ID</td>
-            <td th:text="${departamento.unidadeTrabalho}">Unidade de Trabalho</td>
-            <td th:text="${departamento.nomeDepartamento}">Nome do Departamento</td>
+        <tbody>
+        <tr th:each="departamento : ${departamentos}">
+            <td th:text="${departamento.unidadeTrabalho}"></td>
+            <td th:text="${departamento.nomeDepartamento}"></td>
+            <td>
+                <!-- Botão de Excluir -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#confirmarExclusao' + ${departamento.id}">Excluir</button>
+
+                <!-- Botão de Editar -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">Editar</button>
+            </td>
         </tr>
         </tbody>
     </table>
 </div>
 
-<!-- Não é necessário o JavaScript para carregar os departamentos, pois eles já estão sendo passados pelo controlador -->
+<!-- Modal de Confirmação de Exclusão -->
+<div th:each="departamento : ${departamentos}" class="modal fade" th:id="'confirmarExclusao' + ${departamento.id}" tabindex="-1" role="dialog" aria-labelledby="confirmarExclusaoLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmarExclusaoLabel">Confirmar Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir o departamento <strong th:text="${departamento.nomeDepartamento}"></strong>?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <a th:href="@{/departamentos/excluir/{id}(id=${departamento.id})}" class="btn btn-danger">Excluir</a>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Modal de Edição -->
+<div th:each="departamento : ${departamentos}" class="modal fade" th:id="'editarModal' + ${departamento.id}" tabindex="-1" role="dialog" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Departamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulário de Edição -->
+                <form th:action="@{/departamentos/editar}" th:object="${departamento}" method="post">
+                    <div class="form-group">
+                        <label for="unidadeTrabalho">Unidade de Trabalho:</label>
+                        <input type="text" class="form-control" id="unidadeTrabalho" value="SEPLAG" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="nomeDepartamento">Nome do Departamento:</label>
+                        <input type="text" class="form-control" id="nomeDepartamento" name="nomeDepartamento" th:value="${departamento.nomeDepartamento}">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="submit" class="btn btn-primary" form="editarForm[[${departamento.id}]]">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

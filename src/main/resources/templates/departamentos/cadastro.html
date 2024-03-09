@@ -16,7 +16,7 @@
         </div>
         <div class="form-group">
             <label for="nomeDepartamento">Nome do Departamento:</label>
-            <input type="text" class="form-control" id="nomeDepartamento" name="nomeDepartamento">
+            <input type="text" class="form-control" id="nomeDepartamento" name="nomeDepartamento" required>
             <div th:if="${mensagem}" class="alert alert-danger mt-2" role="alert">
                 <span th:text="${mensagem}"></span>
             </div>
