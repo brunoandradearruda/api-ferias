@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Departamentos</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link href="/webjars/font-awesome/5.15.1/css/all.css" rel="stylesheet">
 
 </head>
@@ -109,15 +110,29 @@
             <td th:text="${departamento.unidadeTrabalho}"></td>
             <td th:text="${departamento.nomeDepartamento}"></td>
             <td>
-                <!-- Botão de Excluir -->
-                <!-- Botão de Excluir -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#confirmarExclusao' + ${departamento.id}">
-                    <i class="fas fa-trash"></i> Excluir
-                </button>
+
+
+
                 <!-- Botão de Editar -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">
+                <button type="button" class="btn btn-warning btn-sm btn-consistent-height" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">
                     <i class="fas fa-edit"></i> Editar
                 </button>
+
+                <!-- Botão de Excluir -->
+                <button type="button" class="btn btn-danger btn-sm open-delete-modal btn-consistent-height" data-toggle="modal" th:attr="data-target='#confirmarExclusao' + ${departamento.id}">
+                    <i class="fas fa-trash"></i> Excluir
+                </button>
+
+
+<!--                <a th:href="@{'/funcionarios/editar/' + ${funcionario.id}}" class="btn btn-warning btn-sm btn-consistent-height">-->
+<!--                    <i class="fas fa-edit"></i> Editar-->
+<!--                </a>-->
+<!--                <button type="button" class="btn btn-danger btn-sm open-delete-modal btn-consistent-height" data-toggle="modal" data-target="#deleteConfirmationModal" th:data-funcionario-id="${funcionario.id}">-->
+<!--                    <i class="fas fa-trash"></i> Excluir-->
+<!--                </button>-->
+
+
+
 
             </td>
         </tr>
