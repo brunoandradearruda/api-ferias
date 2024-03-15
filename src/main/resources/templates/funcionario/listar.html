@@ -11,6 +11,18 @@
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <!-- Links de navegação -->
+        </ul>
+    </div>
+</nav>
+
 <div class="container mt-5">
     <h2>Lista de Funcionários Cadastrados</h2>
     <table class="table">
@@ -37,6 +49,12 @@
                 <a th:href="@{'/funcionarios/editar/' + ${funcionario.id}}" class="btn btn-warning btn-sm">
                     <i class="fas fa-edit"></i> Editar
                 </a>
+
+                <!-- Botão de Excluir modificado para abrir o modal -->
+                <button type="button" class="btn btn-danger open-delete-modal" data-toggle="modal" data-target="#deleteConfirmationModal" th:data-funcionario-id="${funcionario.id}">
+                    <i class="fas fa-trash"></i> Excluir Funcionário
+                </button>
+
             </td>
         </tr>
         </tbody>
@@ -44,9 +62,48 @@
     <a href="/" class="btn btn-primary">Voltar à Página Inicial</a>
 </div>
 
-<!-- Bootstrap and jQuery scripts -->
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="deleteConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmação de Exclusão</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Tem certeza que deseja excluir este funcionário?
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" action="" method="post">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('.btn-danger[data-funcionario-id]').on('click', function() {
+            var funcionarioId = $(this).data('funcionario-id');
+            var actionUrl = `/funcionarios/excluir/${funcionarioId}`;
+            $('#deleteForm').attr('action', actionUrl);
+            $('#deleteConfirmationModal').modal('show');
+        });
+    });
+</script>
+
+
+
 </body>
 </html>

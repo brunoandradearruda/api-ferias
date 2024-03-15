@@ -31,6 +31,7 @@ public class CadastroFuncionarioController {
         List<Departamento> departamentos = departamentoService.listarTodos(); // Obtenha a lista de departamentos
         model.addAttribute("departamentos", departamentos); // Adiciona a lista de departamentos ao modelo
         return "funcionario/cadastro"; // Retorna o nome do template
+
     }
 
 

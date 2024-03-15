@@ -1,38 +1,223 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Editar Funcionário</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <!-- Bootstrap CSS via CDN for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+                        <a class="dropdown-item" href="/cadastro">Cadastro</a>
+                        <a class="dropdown-item" href="/funcionarios/listar">Listar</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFerias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Férias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/registroFerias">Cadastrar</a>
+                        <a class="dropdown-item" href="/historicoFeriasModel">Histórico</a>
+                        <a class="dropdown-item" href="/funcionarios-em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
+                        <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Novo menu "Departamento" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownDepartamento" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departamento
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownDepartamento">
+                        <a class="dropdown-item" href="/departamentos/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/departamentos/listar">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Cargos" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownCargos" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cargos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCargos">
+                        <a class="dropdown-item" href="/cargos/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/cargos/exibir">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Ocorrências" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownOcorrencias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ocorrências
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownOcorrencias">
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Afastamento</a>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+        </ul>
+    </div>
+</nav>
+
 
 <div class="container mt-5">
-    <h2>Editar Funcionário</h2>
+    <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edição de Funcionário</h2>
+
     <form th:action="@{/funcionarios/atualizar/{id}(id=${funcionario.id})}" th:object="${funcionario}" method="post">
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+        <!-- Informações Pessoais -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-2">
+                <label for="matricula" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" id="matricula" th:field="*{matricula}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" class="form-control" id="nome" th:field="*{nome}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="setor" class="form-label">Setor</label>
+                <select class="form-control" id="setor" name="setor">
+                    <option value="">Selecione o Departamento</option>
+                    <!-- Iterar sobre a lista de departamentos para gerar as opções do select -->
+                    <option th:each="departamento : ${departamentos}"
+                            th:value="${departamento.nomeDepartamento}"
+                            th:text="${departamento.nomeDepartamento}">
+                    </option>
+                </select>
+            </div>
+
+
         </div>
-        <div class="mb-3">
-            <label for="cpf" class="form-label">CPF</label>
-            <input type="text" class="form-control" id="cpf" th:field="*{cpf}" required>
+        <div class="row g-3 mb-3">
+            <div class="col-md-3">
+                <label for="funcao" class="form-label">Função</label>
+                <input type="text" class="form-control" id="funcao" th:field="*{funcao}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="unidadeTrabalho" class="form-label">Unidade de Trabalho</label>
+                <input type="text" class="form-control" id="unidadeTrabalho" th:field="*{unidadeTrabalho}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="cargo" class="form-label">Cargo</label>
+                <input type="text" class="form-control" id="cargo" th:field="*{cargo}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="simbolo" class="form-label">Símbolo</label>
+                <input type="text" class="form-control" id="simbolo" th:field="*{simbolo}" required>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" th:field="*{email}" required>
+        <div class="row g-3 mb-3">
+            <div class="col-md-2">
+                <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+                <input type="date" class="form-control" id="dataNascimento" th:field="*{dataNascimento}" required>
+            </div>
+            <div class="col-md-1">
+                <label for="sexo" class="form-label">Sexo</label>
+                <input type="text" class="form-control" id="sexo" th:field="*{sexo}" required>
+            </div>
+            <div class="col-md-2">
+                <label for="pisPasep" class="form-label">PIS/PASEP</label>
+                <input type="text" class="form-control" id="pisPasep" th:field="*{pisPasep}" required>
+            </div>
+            <div class="col-md-2">
+                <label for="cpf" class="form-label">CPF</label>
+                <input type="text" class="form-control" id="cpf" th:field="*{cpf}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="identidade" class="form-label">RG</label>
+                <input type="text" class="form-control" id="identidade" th:field="*{identidade}" required>
+            </div>
+            <div class="col-md-2">
+                <label for="orgaoExpedidor" class="form-label">Orgão Expedidor</label>
+                <input type="text" class="form-control" id="orgaoExpedidor" th:field="*{orgaoExpedidor}" required>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="cargo" class="form-label">Cargo</label>
-            <input type="text" class="form-control" id="cargo" th:field="*{cargo}" required>
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email" th:field="*{email}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="celular" class="form-label">Celular</label>
+                <input type="tel" class="form-control" id="celular" th:field="*{celular}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="dataAdmissao" class="form-label">Data de Admissão</label>
+                <input type="date" class="form-control" id="dataAdmissao" th:field="*{dataAdmissao}" required>
+            </div>
         </div>
-        <!-- Adicione mais campos conforme necessário -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-2">
+                <label for="cep" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="cep" th:field="*{cep}" required>
+            </div>
+            <div class="col-md-3">
+                <label for="endereco" class="form-label">Endereço</label>
+                <input type="text" class="form-control" id="endereco" th:field="*{endereco}" required>
+            </div>
+            <div class="col-md-2">
+                <label for="bairro" class="form-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" th:field="*{bairro}" required>
+            </div>
+            <div class="col-md-1">
+                <label for="numero" class="form-label">Número</label>
+                <input type="text" class="form-control" id="numero" th:field="*{numero}" required>
+            </div>
+            <div class="col-md-2">
+                <label for="complemento" class="form-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" th:field="*{complemento}">
+            </div>
+            <div class="col-md-1">
+                <label for="cidade" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" th:field="*{cidade}" required>
+            </div>
+            <div class="col-md-1">
+                <label for="estado" class="form-label">Estado</label>
+                <input type="text" class="form-control" id="estado" th:field="*{estado}" required>
+            </div>
+        </div>
+        <!-- Add all other fields as in the registration form -->
+
         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         <a th:href="@{/funcionarios/listar}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 
-<script src="/webjars/jquery/jquery.min.js" th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script src="/webjars/bootstrap/js/bootstrap.bundle.min.js" th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="/path/to/your/cep.js"></script> <!-- Update the path to your cep.js script -->
 </body>
 </html>

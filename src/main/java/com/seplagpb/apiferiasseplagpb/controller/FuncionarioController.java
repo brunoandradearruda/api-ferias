@@ -6,12 +6,14 @@ import com.seplagpb.apiferiasseplagpb.model.Funcionario;
 import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -58,23 +60,28 @@ public class FuncionarioController {
     public ResponseEntity<?> deletarFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
-            return ResponseEntity.ok("Excluído com sucesso"); // Retorna uma resposta 200 OK com a mensagem
+            // Redireciona para a página de listagem de funcionários
+            return ResponseEntity.status(HttpStatus.FOUND).location(URI.create("/funcionarios/listar")).build();
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
+            return ResponseEntity.notFound().build();
         }
     }
+
+
+
+
+
+
 
 
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
-            return ResponseEntity.ok("Excluído com sucesso"); // Retorna uma resposta 200 OK com a mensagem
+            return ResponseEntity.ok().build(); // Retorna uma resposta 200 OK sem corpo
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
         }
-
-
     }
 
 
@@ -145,6 +152,8 @@ public class FuncionarioController {
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Funcionário excluído com sucesso.");
         return "redirect:/funcionarios/listar";
     }
+
+
 
 
 }

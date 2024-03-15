@@ -78,6 +78,9 @@ public class DepartamentoController {
         departamentoService.editarDepartamento(departamento);
         return "redirect:/departamentos/listar";
     }
+
+
+
     @PutMapping("/editar/{id}")
     public String editarDepartamento(@PathVariable("id") Long id, @ModelAttribute("departamento") Departamento departamento) {
         departamento.setId(id);
