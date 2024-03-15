@@ -5,18 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Departamentos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="/webjars/font-awesome/5.15.1/css/all.css" rel="stylesheet">
+
 </head>
 <body>
-
-<style>
-    .departamento-cor-1 {
-        background-color: #f2f2f2; /* Cor de fundo clara */
-    }
-    .departamento-cor-2 {
-        background-color: #d9edf7; /* Cor de fundo um pouco mais escura */
-    }
-</style>
-
 
 <nav class="navbar navbar-expand-lg navbar-light bg-primary">
     <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
@@ -118,10 +110,15 @@
             <td th:text="${departamento.nomeDepartamento}"></td>
             <td>
                 <!-- Botão de Excluir -->
-                <button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#confirmarExclusao' + ${departamento.id}">Excluir</button>
-
+                <!-- Botão de Excluir -->
+                <button type="button" class="btn btn-danger" data-toggle="modal" th:attr="data-target='#confirmarExclusao' + ${departamento.id}">
+                    <i class="fas fa-trash"></i> Excluir
+                </button>
                 <!-- Botão de Editar -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">Editar</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" th:attr="data-target='#editarModal' + ${departamento.id}">
+                    <i class="fas fa-edit"></i> Editar
+                </button>
+
             </td>
         </tr>
         </tbody>
@@ -177,8 +174,13 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <i class="fas fa-times"></i> Fechar
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+
                 </div>
             </form>
 

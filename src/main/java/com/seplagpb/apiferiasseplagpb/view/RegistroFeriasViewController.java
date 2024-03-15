@@ -38,7 +38,7 @@ public class RegistroFeriasViewController {
         try {
             // Verificar se já existem férias registradas para este período
             if (funcionarioService.verificaFeriasRegistradas(registroFeriasRequest.getFuncionarioId(), registroFeriasRequest.getInicioFerias(), registroFeriasRequest.getDias())) {
-                redirectAttributes.addFlashAttribute("mensagemErro", "Funcionário já possui férias registradas para este período.");
+                redirectAttributes.addFlashAttribute("mensagemErro", "FUNCIONÁRIO JÁ POSSUI FÉRIAS PARA O PERÍODO SOLICITADO OU JÁ ESTÁ EM FÉRIAS");
                 return "redirect:/registroFerias";
             }
 
@@ -48,7 +48,7 @@ public class RegistroFeriasViewController {
                     registroFeriasRequest.getInicioFerias(),
                     registroFeriasRequest.getDias()
             );
-            redirectAttributes.addFlashAttribute("mensagemSucesso", "Férias registradas com sucesso para " + funcionarioAtualizado.getNome() + "!");
+            redirectAttributes.addFlashAttribute("mensagemSucesso", "FÉRIAS REGISTRADA COM SUCESSO PARA " + funcionarioAtualizado.getNome() + "!");
         } catch (EntityNotFoundException e) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Funcionário não encontrado.");
         } catch (IllegalArgumentException e) {
