@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
+
 @Controller
 public class FuncionarioViewController {
 
@@ -20,13 +22,25 @@ public class FuncionarioViewController {
         this.funcionarioService = funcionarioService;
     }
 
+//    @GetMapping("/funcionarios/editar/{id}")
+//    public String mostrarFormularioDeEdicao(@PathVariable("id") Long id, Model model) {
+//        Funcionario funcionario = funcionarioService.findById(id)
+//                .orElseThrow(() -> new IllegalArgumentException("ID de funcionário inválido:" + id));
+//        model.addAttribute("funcionario", funcionario);
+//        return "funcionario/edita-funcionario"; // Ajuste o nome do template se necessário
+//    }
+
     @GetMapping("/funcionarios/editar/{id}")
     public String mostrarFormularioDeEdicao(@PathVariable("id") Long id, Model model) {
-        Funcionario funcionario = funcionarioService.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID de funcionário inválido:" + id));
-        model.addAttribute("funcionario", funcionario);
-        return "funcionario/edita-funcionario"; // Ajuste o nome do template se necessário
+        Optional<Funcionario> funcionario = funcionarioService.findById(id);
+        if (funcionario.isPresent()) {
+            model.addAttribute("funcionario", funcionario.get());
+            return "funcionario/edita-funcionario";
+        } else {
+            throw new IllegalArgumentException("ID de funcionário inválido:" + id);
+        }
     }
+
 
     @PostMapping("/funcionarios/atualizar/{id}")
     public String atualizarFuncionario(@PathVariable("id") Long id, Funcionario funcionario, RedirectAttributes redirectAttributes) {
