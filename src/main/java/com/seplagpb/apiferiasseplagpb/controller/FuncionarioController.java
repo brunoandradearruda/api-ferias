@@ -1,4 +1,5 @@
 package com.seplagpb.apiferiasseplagpb.controller;
+
 import com.seplagpb.apiferiasseplagpb.dto.FuncionarioFeriasDTO;
 import com.seplagpb.apiferiasseplagpb.dto.RegistrarFeriasRequest;
 import com.seplagpb.apiferiasseplagpb.model.Funcionario;
@@ -6,6 +7,7 @@ import com.seplagpb.apiferiasseplagpb.service.FuncionarioService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/funcionarios")
@@ -33,16 +36,6 @@ public class FuncionarioController {
         return ResponseEntity.ok(funcionarioSalvo);
     }
 
-
-//    @PutMapping("/atualizar/{id}")
-//    public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionarioAtualizado) {
-//        try {
-//            Funcionario funcionario = funcionarioService.atualizarFuncionario(id, funcionarioAtualizado);
-//            return ResponseEntity.ok(funcionario);
-//        } catch (EntityNotFoundException e) {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Funcionario> atualizarFuncionario(@PathVariable Long id, @RequestBody Funcionario funcionarioAtualizado) {
@@ -72,7 +65,6 @@ public class FuncionarioController {
     }
 
 
-
     @DeleteMapping("/excluir/{id}")
     public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
         try {
@@ -84,7 +76,6 @@ public class FuncionarioController {
 
 
     }
-
 
 
     @GetMapping("/ferias-pendentes")
@@ -108,8 +99,6 @@ public class FuncionarioController {
     }
 
 
-
-
     @GetMapping("/em-ferias")
     public List<Funcionario> funcionariosEmFerias() {
         LocalDate dataAtual = LocalDate.now();
@@ -127,8 +116,6 @@ public class FuncionarioController {
                 })
                 .collect(Collectors.toList());
     }
-
-
 
 
     @GetMapping("/listar-funcionarios")
@@ -152,15 +139,12 @@ public class FuncionarioController {
         return "ferias/registroFerias"; // Redirecione para uma página de confirmação
     }
 
-    @GetMapping("/funcionarios/excluir/{id}") // Use @GetMapping se você não configurou o suporte ao método DELETE
+    @GetMapping("/funcionarios/excluir/{id}")
     public String excluirFuncionario(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         funcionarioService.excluirPorId(id);
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Funcionário excluído com sucesso.");
-        return "redirect:/funcionarios/listar"; // Substitua "/funcionarios/listar" pelo endpoint correto
+        return "redirect:/funcionarios/listar";
     }
-
-
-
 
 
 }
