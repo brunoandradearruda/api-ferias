@@ -1,12 +1,13 @@
 package com.seplagpb.apiferiasseplagpb;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ApiFeriasSeplagpbApplicationTests {
+class AuthApiApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }
