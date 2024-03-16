@@ -13,7 +13,10 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>api-ferias-seplagpb</name>
     <description>api-ferias-seplagpb</description>
+
+
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
     </properties>
     <dependencies>
@@ -153,6 +156,12 @@
                         </exclude>
                     </excludes>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
             </plugin>
 
             <plugin>
