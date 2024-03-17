@@ -30,7 +30,7 @@ public class CargoController {
         return "redirect:/cargos/cadastrar";
     }
 
-    @GetMapping("/cargos")
+    @GetMapping("/cargos/listar")
     public String listarCargos(Model model) {
         model.addAttribute("cargos", cargoService.listarCargos());
         return "cargo/listar";

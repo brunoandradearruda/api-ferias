@@ -11,6 +11,110 @@
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+    <!--    <a class="navbar-brand" href="#">Minha Empresa</a>-->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+        <ul class="navbar-nav mx-auto">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="/">Home</a>
+            </li>
+            <li class="nav-item active">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFuncionarios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Funcionários
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFuncionarios">
+                        <a class="dropdown-item" href="/cadastro">Cadastro</a>
+                        <a class="dropdown-item" href="/funcionarios/listar">Listar</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownFerias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Férias
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownFerias">
+                        <a class="dropdown-item" href="/registroFerias">Cadastrar</a>
+                        <a class="dropdown-item" href="/historicoFeriasModel">Histórico</a>
+                        <a class="dropdown-item" href="/funcionarios-em-ferias">Em Férias</a>
+                        <a class="dropdown-item" href="/ferias/pendentes">Férias Pendentes</a>
+                        <a class="dropdown-item" href="/ferias/direito">Direito à Férias</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Novo menu "Departamento" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownDepartamento" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Departamento
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownDepartamento">
+                        <a class="dropdown-item" href="/departamentos/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/departamentos/listar">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Cargos" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownCargos" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Cargos
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownCargos">
+                        <a class="dropdown-item" href="/cargos/cadastrar">Cadastrar</a>
+                        <a class="dropdown-item" href="/cargos/listar">Exibir</a>
+                    </div>
+                </div>
+            </li>
+            <!-- Fim do novo menu -->
+            <!-- Novo menu "Ocorrências" -->
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownOcorrencias" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ocorrências
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownOcorrencias">
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Afastamento</a>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </div>
+                </div>
+            </li>
+
+            <li class="nav-item">
+                <div class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownRelatorios" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Relatórios
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownOcorrencias">
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Funcionário Exonerados</a>
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Funcionário Demitidos</a>
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Cedidos à SEPLAG</a>
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Cedidos a Outra Secretaria/Órgão</a>
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Funcionário Efetivos</a>
+                        <a class="dropdown-item" href="/ocorrencias/afastamento">Funcionário Comissionados</a>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </div>
+                </div>
+            </li>
+
+            <!-- Fim do novo menu -->
+        </ul>
+    </div>
+</nav>
+
+
 <div class="container">
     <h1>Cadastro de Cargos</h1>
     <form action="#" th:action="@{/cargos/cadastrar}" th:object="${cargo}" method="post">
