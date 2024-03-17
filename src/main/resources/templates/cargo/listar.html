@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Cargos</title>
+    <!-- Adicione os links para os arquivos CSS do Bootstrap do WebJar -->
+    <link href="https://cdn.jsdelivr.net/webjars/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Se você precisar adicionar estilos personalizados, pode fazê-lo aqui */
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Listagem de Cargos</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nome do Cargo</th>
+            <th scope="col">Símbolo do Cargo</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Loop sobre os cargos e símbolos cadastrados -->
+        <tr th:each="cargo : ${cargos}">
+            <td th:text="${cargo.id}"></td>
+            <td th:text="${cargo.nomeCargo}"></td>
+            <td th:text="${cargo.simboloCargo}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Adicione os links para os arquivos JS do Bootstrap do WebJar, se necessário -->
+<script src="https://cdn.jsdelivr.net/webjars/bootstrap/5.1.3/js/bootstrap.min.js"></script>
+</body>
+</html>

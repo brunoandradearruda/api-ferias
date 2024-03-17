@@ -12,6 +12,8 @@ public class DepartamentoService {
 
     private final DepartamentoRepository departamentoRepository;
 
+
+
     @Autowired
     public DepartamentoService(DepartamentoRepository departamentoRepository) {
         this.departamentoRepository = departamentoRepository;
@@ -50,5 +52,7 @@ public class DepartamentoService {
 
 
 }
+
+
 
 
