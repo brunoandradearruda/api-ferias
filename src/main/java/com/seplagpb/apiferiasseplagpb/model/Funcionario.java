@@ -37,10 +37,10 @@ public class Funcionario {
     private String setor;
     private String unidadeTrabalho;
     private LocalDate dataAdmissao;
-    private Integer diasFeriasGozados = 0; // Inicializado com 0
+    private Integer diasFeriasGozados = 0;
     private LocalDate inicioFerias;
     private LocalDate fimFerias;
-    private Integer diasFeriasRestantes = 30; // Inicializado com o total de dias de férias por ano
+    private Integer diasFeriasRestantes = 30;
     private LocalDate dataUltimasFerias;
 
     public Funcionario() {}

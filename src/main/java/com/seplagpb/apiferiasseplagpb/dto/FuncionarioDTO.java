@@ -7,7 +7,7 @@ public class FuncionarioDTO {
 
     private String nome;
     private LocalDate dataAdmissao;
-    // Outros campos conforme necessário
+
 
 
     public String getNome() {

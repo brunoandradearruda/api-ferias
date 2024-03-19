@@ -78,9 +78,9 @@ public class FuncionarioController {
     public ResponseEntity<?> excluirFuncionario(@PathVariable Long id) {
         try {
             funcionarioService.deletarFuncionario(id);
-            return ResponseEntity.ok().build(); // Retorna uma resposta 200 OK sem corpo
+            return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build(); // Retorna uma resposta 404 Not Found se o funcionário não for encontrado
+            return ResponseEntity.notFound().build();
         }
     }
 

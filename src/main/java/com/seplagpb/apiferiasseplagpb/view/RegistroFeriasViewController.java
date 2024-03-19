@@ -28,7 +28,7 @@ public class RegistroFeriasViewController {
 
     @GetMapping("/registroFerias")
     public String mostrarFormularioRegistroFerias(Model model) {
-        List<Funcionario> funcionarios = funcionarioService.findAll(); // Assumindo que você tem um serviço para buscar funcionários
+        List<Funcionario> funcionarios = funcionarioService.findAll();
         RegistrarFeriasRequest registroFeriasRequest = new RegistrarFeriasRequest();
         model.addAttribute("funcionarios", funcionarios);
         model.addAttribute("registroFeriasRequest", registroFeriasRequest);
@@ -38,13 +38,13 @@ public class RegistroFeriasViewController {
     @PostMapping("/registroFerias")
     public String registrarFerias(@ModelAttribute RegistrarFeriasRequest registroFeriasRequest, RedirectAttributes redirectAttributes) {
         try {
-            // Verificar se já existem férias registradas para este período
+
             if (funcionarioService.verificaFeriasRegistradas(registroFeriasRequest.getFuncionarioId(), registroFeriasRequest.getInicioFerias(), registroFeriasRequest.getDias())) {
                 redirectAttributes.addFlashAttribute("mensagemErro", "FUNCIONÁRIO JÁ POSSUI FÉRIAS PARA O PERÍODO SOLICITADO OU JÁ ESTÁ EM FÉRIAS");
                 return "redirect:/registroFerias";
             }
 
-            // Registrar as férias se não houver sobreposição
+
             Funcionario funcionarioAtualizado = funcionarioService.registrarPeriodoFerias(
                     registroFeriasRequest.getFuncionarioId(),
                     registroFeriasRequest.getInicioFerias(),
@@ -58,7 +58,7 @@ public class RegistroFeriasViewController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("mensagemErro", "Erro inesperado ao registrar férias: " + e.getMessage());
         }
-        return "redirect:/registroFerias"; // Redireciona para evitar reenvio do formulário
+        return "redirect:/registroFerias";
     }
 
 }

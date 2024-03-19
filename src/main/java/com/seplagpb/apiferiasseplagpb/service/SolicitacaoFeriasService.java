@@ -29,7 +29,7 @@ public class SolicitacaoFeriasService {
         return solicitacaoFeriasRepository.save(solicitacao);
     }
 
-    // Método para calcular dias de férias pendentes
+
     public int calcularDiasFeriasPendentes(Long funcionarioId) {
         Funcionario funcionario = funcionarioRepository.findById(funcionarioId)
                 .orElseThrow(() -> new EntityNotFoundException("Funcionário não encontrado"));

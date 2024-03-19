@@ -20,9 +20,9 @@ public class DepartamentoService {
     }
 
     public void editarDepartamento(Departamento departamento) {
-        // Verifica se o departamento existe no banco de dados antes de editar
+
         if (departamentoRepository.existsById(departamento.getId())) {
-            // Atualiza o departamento no banco de dados
+
             departamentoRepository.save(departamento);
         } else {
             throw new RuntimeException("Departamento não encontrado para edição.");

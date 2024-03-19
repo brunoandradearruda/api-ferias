@@ -18,7 +18,7 @@ public class ListarFuncionarioController {
         // Obtém a lista de funcionários do serviço
         model.addAttribute("funcionarios", funcionarioService.listarFuncionariosCadastrados());
 
-        // Retorna o nome da página Thymeleaf que exibirá a lista de funcionários
+
         return "funcionario/listar";
     }
 }

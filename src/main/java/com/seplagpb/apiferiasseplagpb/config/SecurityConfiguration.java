@@ -18,12 +18,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     @Autowired
-    private SecurityFilter securityFilter; // Certifique-se de que SecurityFilter seja adequado para seu uso com sessões
+    private SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Desabilita CSRF, o que é comum em APIs REST, mas considere habilitar em formulários
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)) // Modifica para suportar sessões
                 .authorizeRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/usuarios/admin").hasRole("ADMIN")
@@ -32,13 +32,13 @@ public class SecurityConfiguration {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login") // Define a página de login personalizada
-                        .permitAll() // Permite acesso não autenticado à página de login
-                        .defaultSuccessUrl("/", true) // Página para redirecionar após login bem-sucedido
+                        .loginPage("/login")
+                        .permitAll()
+                        .defaultSuccessUrl("/", true)
                 )
-                .logout(logout -> logout.permitAll()); // Permite logout para todos
+                .logout(logout -> logout.permitAll());
 
-        // Adiciona o filtro antes do UsernamePasswordAuthenticationFilter
+
         http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

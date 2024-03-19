@@ -46,16 +46,16 @@ public class FuncionarioViewController {
     public String atualizarFuncionario(@PathVariable("id") Long id, Funcionario funcionario, RedirectAttributes redirectAttributes) {
         funcionarioService.salvar(funcionario);
         redirectAttributes.addFlashAttribute("successMessage", "Dados do funcionário atualizados com sucesso!");
-        return "redirect:/funcionarios/listar"; // Ajuste o caminho de redirecionamento conforme necessário
+        return "redirect:/funcionarios/listar";
     }
 
 
     @GetMapping("/edicao/{id}")
     public String exibirFormularioEdicao(@PathVariable Long id, Model model) {
-        model.addAttribute("funcionario", new Funcionario()); // Adiciona um novo funcionário ao modelo
-        List<Departamento> departamentos = departamentoService.listarTodos(); // Obtenha a lista de departamentos
-        model.addAttribute("departamentos", departamentos); // Adiciona a lista de departamentos ao modelo
-        return "funcionario/edita-funcionario"; // Retorna o nome do template de edição
+        model.addAttribute("funcionario", new Funcionario());
+        List<Departamento> departamentos = departamentoService.listarTodos();
+        model.addAttribute("departamentos", departamentos);
+        return "funcionario/edita-funcionario";
     }
 
 

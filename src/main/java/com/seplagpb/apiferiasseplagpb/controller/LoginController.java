@@ -11,5 +11,5 @@ public class LoginController {
         return "login";
     }
 
-    // Se necessário, adicione um método para "/home" ou ajuste conforme a lógica da sua aplicação
+
 }

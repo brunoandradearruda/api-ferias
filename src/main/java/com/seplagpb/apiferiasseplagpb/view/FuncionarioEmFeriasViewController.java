@@ -19,6 +19,6 @@ public class FuncionarioEmFeriasViewController {
     @GetMapping("/funcionarios-em-ferias")
     public String mostrarFuncionariosEmFerias(Model model) {
         model.addAttribute("funcionariosEmFerias", funcionarioService.funcionariosEmFerias());
-        return "ferias/funcionarioEmferias"; // Nome do arquivo Thymeleaf (funcionarios-em-ferias.html)
+        return "ferias/funcionarioEmferias";
     }
 }

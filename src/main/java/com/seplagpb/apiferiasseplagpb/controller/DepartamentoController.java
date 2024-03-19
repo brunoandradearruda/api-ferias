@@ -35,8 +35,8 @@ public class DepartamentoController {
 
     @PostMapping("/salvar")
     public String salvarDepartamento(@ModelAttribute("departamento") Departamento departamento, Model model) {
-        departamento.setUnidadeTrabalho("SEPLAG"); // Define a unidade de trabalho como SEPLAG
-        String nomeDepartamento = departamento.getNomeDepartamento().toUpperCase(); // Converter para maiúsculas
+        departamento.setUnidadeTrabalho("SEPLAG");
+        String nomeDepartamento = departamento.getNomeDepartamento().toUpperCase();
         List<Departamento> departamentos = departamentoService.listarDepartamentos();
 
         // Verificar se o departamento já está cadastrado
@@ -47,7 +47,7 @@ public class DepartamentoController {
             model.addAttribute("mensagem", "Departamento já cadastrado.");
             return "departamentos/cadastro";
         } else {
-            departamento.setNomeDepartamento(nomeDepartamento); // Garantir que o nome seja maiúsculo
+            departamento.setNomeDepartamento(nomeDepartamento);
             departamentoService.salvarDepartamento(departamento);
             return "redirect:/departamentos/cadastrar";
         }
